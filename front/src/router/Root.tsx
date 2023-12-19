@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import css from '../css/App.module.css';
 import Intro from '../components/intro';
 import { Outlet, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const Root = () =>{
-  const {key} = useLocation();
-
+  const {pathname} = useLocation();
 
   const setScreenSize = ()=> {
     let vh = window.innerHeight * 0.01;
@@ -18,11 +18,11 @@ const Root = () =>{
 
   return (
     <div className={css.app}>
-      <h1 className={css.h1}>YuDa</h1>
+        <Link className={css.h1} to={"/"}><h1>YuDa</h1></Link>
       <main>
         <Outlet/>
       </main>
-      {key === 'default' && <Intro/>}
+      {pathname === '/' && <Intro/>}
     </div>
   );
 }

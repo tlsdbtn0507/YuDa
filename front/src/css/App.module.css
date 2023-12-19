@@ -11,8 +11,9 @@
 }
 .h1{
   color: white;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 800;
+  text-decoration: none;
 }
 .section{
   background-color: white;
