@@ -3,6 +3,7 @@ import Root from "./Root";
 import Login from './Login';
 import Sign from './Sign';
 import { sendSign } from '../api/action/actions';
+import Main from './Main';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/:userId",
-
+        element:<Main/>
       }
     ]
   }
