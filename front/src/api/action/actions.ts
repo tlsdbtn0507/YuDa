@@ -1,3 +1,5 @@
+import { redirect } from "react-router";
+
 interface sendSignObj {
   request:Request
 }
@@ -15,5 +17,5 @@ export const sendSign = async ({request}:sendSignObj) =>{
   })
 
   console.log(toSendData)
-  return null
+  return redirect('/1')
 }
