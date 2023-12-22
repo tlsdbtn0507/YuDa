@@ -4,9 +4,9 @@ const Diary = () => {
 
   const diary = {
     date:{
-      date:'16',
+      date: `${new Date().getDate()}`,
       day:'Tue',
-      month:'12'
+      month:`${new Date().getMonth()+1}`,
     },
     content:{
       title:'얄리얄리',
