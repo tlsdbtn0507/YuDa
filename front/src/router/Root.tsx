@@ -18,7 +18,7 @@ const Root = () =>{
 
   return (
     <div className={css.app}>
-        <Link className={css.h1} to={"/"}><h1>YuDa</h1></Link>
+        <Link className={css.h1} to={"/"}><p>YuDa</p></Link>
       <main>
         <Outlet/>
       </main>

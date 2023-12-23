@@ -1,9 +1,8 @@
 .total{
   background-color: white;
-  /* font-family: JetBrains Mono; */
   border-radius: 20px;
   width: 21rem;
-  height: 42rem;
+  height: 40rem;
   display: flex;
   flex-direction: column;
   font-family: JetBrains Mono;
@@ -16,4 +15,10 @@
 
 .today{
   text-align: center;
+  color: #4C4C4C;
+  font-family: JetBrains Mono;
+  font-size: 1.1875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
