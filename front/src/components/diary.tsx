@@ -1,8 +1,9 @@
 import css from '../css/diary.module.css'
+import { DiarySummary } from '../model/types'
 
 const Diary = () => {
 
-  const diary = {
+  const diary:DiarySummary = {
     date:{
       date: `${new Date().getDate()}`,
       day:'Tue',
