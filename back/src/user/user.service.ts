@@ -12,7 +12,10 @@ export class UserService {
   ) { }
   
   async signUp(createUserDto: CreateUserDto) {
-    console.log(createUserDto)
-    // return this.userRepository.save
+    const { userId, name, pw } = createUserDto;
+    const res = this.userRepository.create({ userId, name, pw });
+
+    await this.userRepository.save(res)
+    return res
   }
 }
