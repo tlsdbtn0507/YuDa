@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import Root from "./Root";
 import Login from './Login';
 import Sign from './Sign';
-import { sendSign } from '../api/action/actions';
 import Main from './Main';
+import { sendSign } from '../api/action/actions';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path:'sign',
-        element:<Sign/>,
+        element: <Sign />,
         action:sendSign
       },
       {

@@ -4,9 +4,9 @@ const api = {
   url:'asdfasdf'  
 }
 
-const APIs = axios.create({
+const API = axios.create({
   baseURL:api.url
 })
 
-export default APIs
+export default API
 

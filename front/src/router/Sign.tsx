@@ -1,12 +1,27 @@
 import { Form } from 'react-router-dom'
 
 import css from '../css/sign.module.css'
+import { useMutation } from 'react-query';
+import { useRef } from 'react';
+import { checkIdDuple } from '../api/action/actions';
 
 const Sign = () => {
 
+  const idToCheckDuple = useRef<HTMLInputElement>(null)
+
+  const { mutate } = useMutation({
+    mutationFn:checkIdDuple
+  })
+
   const doOtherThing = (e:React.FormEvent) =>{
     e.preventDefault();
-    console.log('doing other')
+    const { value } = idToCheckDuple.current as HTMLInputElement
+    
+    if (value === '') {
+      idToCheckDuple.current?.focus()
+      return alert('ID를 입력해주세요')
+    }
+    mutate(value)
   };  
 
   return(
@@ -18,8 +33,9 @@ const Sign = () => {
           <label htmlFor="userId">아이디
             <button onClick={doOtherThing} className={css.checkBtn}>
               아이디 중복 조회
-            </button></label>
-            <input type="userId" id='userId' name='userId'/>
+            </button>
+          </label>
+            <input type="userId" id='userId' name='userId' ref={idToCheckDuple}/>
           <label htmlFor="pw">비밀번호</label>
             <input type="password" id='pw' name='pw'
               placeholder='영문, 숫자, 특수기호 포함 6글자'/>

@@ -5,10 +5,11 @@ import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
 
-const Login = () =>{ 
+const Login = () => { 
+  
   return(
     <div className={css.div}>
-      <Form className={css.form}>
+      <Form className={css.form}  >
         <h1>Log In</h1>
         <label htmlFor='id' id='id'className={css.font}>
           <FontAwesomeIcon icon={faUser}/> ID
