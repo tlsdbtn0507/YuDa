@@ -1,11 +1,7 @@
 import axios from "axios"
 
-const api = {
-  url:'asdfasdf'  
-}
-
 const API = axios.create({
-  baseURL:api.url
+  baseURL: process.env.REACT_APP_SERVER
 })
 
 export default API
