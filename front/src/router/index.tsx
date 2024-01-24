@@ -11,16 +11,16 @@ const router = createBrowserRouter([
     element:<Root/>,
     children:[
       {
-        path:'login',
+        path:'/login',
         element:<Login/>
       },
       {
-        path:'sign',
+        path:'/sign', 
         element: <Sign />,
         action:sendSign
       },
       {
-        path:"/:userId",
+        path:"/main",
         element:<Main/>
       }
     ]
