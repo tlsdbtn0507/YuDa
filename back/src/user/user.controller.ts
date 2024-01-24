@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post ,Get} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.Dto';
 
@@ -9,5 +9,10 @@ export class UserController {
   @Post('/signup')
   createUser(@Body() creatUserDto: CreateUserDto) {
     return this.userService.signUp(creatUserDto)
+  }
+
+  @Get('/idcheck/:id')
+  checkIdDuple(@Param() id: {id:string} ) {
+    return this.userService.checkIdDuple(id)
   }
 }
