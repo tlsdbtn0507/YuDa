@@ -18,6 +18,20 @@
 
 input{
   margin-bottom: 10%;
+  width:21vh;
+}
+
+.divpw{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-around;
+}
+.pwInput{
+  width: 20vh;
+}
+.pwInputVal{
+  border: 1px solid red;
 }
 
 .checkBtn{
