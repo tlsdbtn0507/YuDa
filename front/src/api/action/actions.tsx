@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import API from "../api";
 import { redirect, useNavigate } from "react-router";
 
@@ -20,18 +19,11 @@ export const sendSign = async ({request}:sendSignObj) =>{
   })
 
   try {
-    const {data} = await API.post(`/user/signup`, toSendData);
-    console.log(`${data.userId}`)
-    
-    return redirect(`/main`)
-    // navigate('/main')
+    const { data } = await API.post(`/user/signup`, toSendData);
+    return redirect(`/login`)
   } catch (error) {
     //에러 처리 핸들러 추가하기!
     console.log(error)
     throw new Error()
   }
-  //로그인 성공 알림 후 '/login'이동
-
-  //로그인 성공 알린 후 메인 페이지 이동
-  
 }
