@@ -6,7 +6,9 @@ const serverConfig = config.get('server');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  const port  = serverConfig.get('port')
+  // const port = serverConfig.get('port');
+  const port = process.env.HOSTPORT;
+
   await app.listen(port);
 }
 bootstrap();
