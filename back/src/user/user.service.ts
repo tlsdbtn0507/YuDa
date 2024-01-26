@@ -38,14 +38,14 @@ export class UserService {
   }
 
   async login(signUserDto:SignUserDto) {
-    const { userId, pw } = signUserDto;
-    const getUser = await this.userRepository.findOne({ where: { userId } });
+    const { id, pw } = signUserDto;
+    const getUser = await this.userRepository.findOne({ where: { userId:id } });
 
     if (getUser && (await bcrypt.compare(pw, getUser.pw))) {
-      const payload = { userId };
-      const accesToken = await this.jwtService.sign(payload);
+      const payload = { id };
+      const accessToken = await this.jwtService.sign(payload);
 
-      return { accesToken };
+      return { accessToken };
     }
     else throw new UnauthorizedException('로그인 실패');
 

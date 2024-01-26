@@ -6,9 +6,6 @@ export class CreateUserDto {
   name: string;
   
   @IsNotEmpty()
-  @Matches(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/, {
-    message:'아이디에 한글을 포함할 수 없습니다'
-  })
   @MinLength(4, {
     message:'아이디는 최소 4자 이상이여야합니다'
   })
