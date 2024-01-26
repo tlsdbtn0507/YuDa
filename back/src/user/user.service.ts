@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
@@ -14,8 +14,22 @@ export class UserService {
     private userRepository: UserRepository,
     private jwtService:JwtService
   ) { }
-  async signUp(createUserDto:CreateUserDto) {
-    return this.userRepository.signUp(createUserDto);
+  async signUp(createUserDto: CreateUserDto): Promise<UserEntity> {
+    const { userId, name, pw } = createUserDto;
+
+    const salt = await bcrypt.genSalt();
+    
+    const hashedPw = await bcrypt.hash(pw, salt);
+
+    const user = this.userRepository.create({ userId, name, pw:hashedPw });
+
+    try {
+      await this.userRepository.save(user);
+      return user
+    } catch (error) {
+      if (error.code === '23505') throw new ConflictException('이미 존재하는 아이디입니다');
+      else throw new InternalServerErrorException();
+    }
   }
 
   async checkIdDuple(idcheck:{id:string}) {
