@@ -6,7 +6,7 @@ import IdCheckBtn from '../components/sign/idCheckBtn';
 import css from '../css/sign.module.css'
 import { useQuery } from 'react-query';
 import { useRef, useState } from 'react';
-import { checkIdDuple } from '../api/query/query';
+import { checkIdDuple } from '../api/users/usersApi';
 
 const Sign = () => {
 
@@ -30,7 +30,7 @@ const Sign = () => {
     const { value } = idToCheckDuple.current as HTMLInputElement;
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     
-    if (value === '' || korean.test(value)) {
+    if (value === '' || korean.test(value) || value.length < 4) {
       idToCheckDuple.current?.focus()
       return alert('ID를 확인해주세요')
     }
@@ -62,7 +62,7 @@ const Sign = () => {
           </label>
         <input
           required type="userId" id='userId' name='userId' ref={idToCheckDuple}
-          placeholder='한글 사용 불가'/>
+          placeholder='한글 사용 불가 및 최소 4자'/>
         <label htmlFor="pw">비밀번호</label>
           <PwDiv type='pw' />
         <label htmlFor="pwCheck">비밀번호 확인</label>

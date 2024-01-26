@@ -36,11 +36,13 @@ const PwDiv = (props: PwDivType) => {
     setIsInitial(false)
     const { value } = e.target;
     if (value === pw) {
-      console.log(1)
       setIsValid(true);
-      setUserPWCheck()
+      setUserPWCheck(true)
     }
-    else setIsValid(false)
+    else {
+      setIsValid(false);
+      setUserPWCheck(false)
+    }
   }
 
   return (
