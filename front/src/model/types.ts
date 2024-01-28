@@ -18,3 +18,11 @@ export interface DiarySummary{
   content:Contents,
   img:Img 
 }
+
+export interface sendObj {
+  request:Request
+}
+
+export interface toSendDataObj {
+  [index:string]:string
+}
