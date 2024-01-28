@@ -13,7 +13,6 @@ const router = createBrowserRouter([
       {
         path:'/login',
         element: <Login />,
-        action:login
       },
       {
         path:'/sign', 
