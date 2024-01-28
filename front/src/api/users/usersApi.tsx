@@ -1,33 +1,15 @@
 import API from "../api";
-import { redirect, useNavigate } from "react-router";
-
-interface sendObj {
-  request:Request
-}
-
-interface toSendDataObj {
-  [index:string]:string
-}
-
-const toSendData = (data: FormData) => {
-  const toReturn: toSendDataObj = {}
-  data.forEach((e, i) => {
-    if(i !== 'pwCheck') toReturn[`${i}`] = e as string
-  });
-  return toReturn
-}
-
+import { redirect } from "react-router";
+import { sendObj } from '../../model/types';
+import { toSendData } from "../../utils/util";
 
 export const sendSign = async ({request}:sendObj) =>{
-  // const toSendData:toSendDataObj = {}
 
   const formData = await request.formData();
-  // data.forEach((e, i) => {
-  //   if(i !== 'pwCheck') toSendData[`${i}`] = e as string
-  // })
 
   try {
     const { data } = await API.post(`/user/signup`, toSendData(formData));
+    alert('회원 가입이 완료되었습니다.')
     return redirect(`/login`)
   } catch (error) {
     //에러 처리 핸들러 추가하기!
@@ -41,10 +23,12 @@ export const checkIdDuple = async (idToCheckDuple:string):Promise<boolean> => {
   return res.data
 }
 
-export const login = async ({ request }: sendObj) => {
-  const formData = await request.formData();
-
-  const {data} = await API.post(`/user/login`, toSendData(formData));
-  console.log(data.accessToken);
+export const login = async (request: { id: string, pw: string }) => {
+  try {
+    const { data: { accessToken } } = await API.post(`/user/login`, request);
+    return accessToken
+  } catch (error) {
+    console.log(error)
+  }
   return null
 }
