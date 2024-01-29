@@ -42,10 +42,13 @@ export class UserService {
     const getUser = await this.userRepository.findOne({ where: { userId:id } });
 
     if (getUser && (await bcrypt.compare(pw, getUser.pw))) {
-      const payload = { id };
-      const accessToken = await this.jwtService.sign(payload);
+      const payload = { id,name:getUser.name };
+      const refreshToken = await this.jwtService.sign({
+        id: 'refresh', expiresIn: process.env.JWT_EXPIRES_REFRESH
+      });
+      const accessToken = await this.jwtService.sign(payload)
 
-      return { accessToken };
+      return { accessToken,refreshToken };
     }
     else throw new UnauthorizedException('로그인 실패');
 
