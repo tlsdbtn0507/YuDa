@@ -1,7 +1,7 @@
 import css from '../../css/sign.module.css'
 import { useState } from 'react';
 import Icons from './icons';
-import userStore from '../../store/user/userStore';
+import { userStore } from '../../store/user/userStore';
 
 interface PwDivType {
   type: string,

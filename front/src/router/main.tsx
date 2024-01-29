@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import LastToday from '../components/lastToday'
 import MyDiaries from '../components/myDiaries'
 import css from '../css/main.module.css'
-import userStore from '../store/user/userStore'
+import { userStore } from '../store/user/userStore';
 import { useNavigate } from 'react-router'
 
 const Main = () => {

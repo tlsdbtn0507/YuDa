@@ -3,7 +3,7 @@ import css from '../css/login.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
-import userStore from '../store/user/userStore'
+import { userStore } from '../store/user/userStore';
 import { useRef } from 'react'
 import { useMutation } from 'react-query'
 import { login } from '../api/users/usersApi'

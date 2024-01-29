@@ -9,7 +9,7 @@ interface UserState  {
   setUserPWCheck : (check:boolean) =>void
 }
 
-const userStore = create<UserState>((set) => ({
+export const userStore = create<UserState>((set) => ({
   pw: '',
   pwCheck: false,
   accessToken:'',
@@ -17,5 +17,3 @@ const userStore = create<UserState>((set) => ({
   setAccToken:(accessToken)=>(set({accessToken})),
   setUserPWCheck: (check) => set(state => ({ pwCheck: check })),
 }))
-
-export default userStore

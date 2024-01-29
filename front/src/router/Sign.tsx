@@ -1,6 +1,6 @@
 import { Form } from 'react-router-dom'
 import PwDiv from '../components/sign/pwDiv';
-import userStore from '../store/user/userStore';
+import { userStore } from '../store/user/userStore';
 import IdCheckBtn from '../components/sign/idCheckBtn';
 
 import css from '../css/sign.module.css'
