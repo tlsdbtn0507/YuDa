@@ -11,7 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: UserRepository,
+    private readonly userRepository: UserRepository,
     private jwtService:JwtService
   ) { }
   async signUp(createUserDto: CreateUserDto): Promise<UserEntity> {
@@ -44,7 +44,7 @@ export class UserService {
     if (getUser && (await bcrypt.compare(pw, getUser.pw))) {
       const payload = { id,name:getUser.name };
       const refreshToken = await this.jwtService.sign({
-        id: 'refresh', expiresIn: process.env.JWT_EXPIRES_REFRESH
+       id, expiresIn: process.env.JWT_EXPIRES_REFRESH
       });
       const accessToken = await this.jwtService.sign(payload)
 
