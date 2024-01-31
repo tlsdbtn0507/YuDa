@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMConfig } from './configs/typeorm.config';
 import { ConfigModule } from '@nestjs/config';
+import { DiaryModule } from './diary/diary.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath:'.env'
     }),
     TypeOrmModule.forRoot(typeORMConfig),
+    DiaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
