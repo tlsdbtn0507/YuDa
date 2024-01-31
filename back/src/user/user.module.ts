@@ -6,9 +6,11 @@ import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 import { JwtStrategy } from 'src/configs/jwt-strategy';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
     }),
@@ -16,6 +18,6 @@ import { JwtModule } from '@nestjs/jwt';
   ],
   controllers: [UserController],
   providers: [UserService,JwtStrategy],
-  exports:[JwtStrategy]
+  exports:[JwtStrategy,PassportModule]
 })
 export class UserModule {}

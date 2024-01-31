@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { DiaryEntity } from "src/diary/diary.entity";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
 @Unique(['userId'])
@@ -13,5 +14,8 @@ export class UserEntity extends BaseEntity{
   userId: string
   
   @Column()
-  pw:string
+  pw: string
+  
+  @OneToMany( type=>DiaryEntity , diary=>diary.user  )
+  diary:DiaryEntity
 }
