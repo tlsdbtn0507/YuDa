@@ -1,9 +1,8 @@
-import { Form, redirect, useActionData, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import css from '../css/login.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
-import { userStore } from '../store/user/userStore';
 import { useRef } from 'react'
 import { useMutation } from 'react-query'
 import { login } from '../api/users/usersApi'
@@ -14,15 +13,17 @@ const Login = () => {
   const pwRef = useRef<HTMLInputElement>(null);
   
   const navigate = useNavigate();
-  const { setAccToken } = userStore(state => state);
 
   const { mutate } = useMutation({
     mutationFn: login,
     onSuccess(data) {
       if (data) {
-        setAccToken(data)
         navigate('/main');
-      } else alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요');
+      } else {
+        alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요');
+        idRef.current!.value = '';
+        pwRef.current!.value = '';
+      };
     },
   });
 

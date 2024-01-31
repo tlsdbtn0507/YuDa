@@ -25,8 +25,8 @@ export const checkIdDuple = async (idToCheckDuple:string):Promise<boolean> => {
 
 export const login = async (request: { id: string, pw: string }) => {
   try {
-    const { data: { accessToken } } = await API.post(`/user/login`, request);
-    return accessToken
+    const { data } = await API.post(`/user/login`, request);
+    return data;
   } catch (error) {
     console.log(error)
   }

@@ -1,9 +1,6 @@
-import { useEffect } from 'react'
 import LastToday from '../components/lastToday'
 import MyDiaries from '../components/myDiaries'
 import css from '../css/main.module.css'
-import { userStore } from '../store/user/userStore';
-import { useNavigate } from 'react-router'
 
 const Main = () => {
 
@@ -17,19 +14,6 @@ const Main = () => {
 
     return `${year} . ${month+1} . ${date} . ${days[day]}`
   }
-
-  const { accessToken } = userStore(state => state);
-
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    
-    if (accessToken === '') {
-      alert('로그인 후 사용해주세요')
-      navigate('/login');
-    }
-
-  },[accessToken])
 
   return(
     <div className={css.total}>
