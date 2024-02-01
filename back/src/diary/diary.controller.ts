@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe,Get, Param } from '@nestjs/common';
 import { DiaryService } from './diary.service';
 import { CreateDiaryDTO } from './dto/createDiary.dto';
 import { GetUser } from 'src/configs/get-user.decorator';
@@ -18,5 +18,15 @@ export class DiaryController {
     @GetUser() user : UserEntity
   ) {
     return this.diaryService.createDiary(createDiaryDTO, user);
+  }
+
+  @Get()
+  getDiaries(@GetUser() user: UserEntity) {
+    return this.diaryService.getDiaries(user);
+  }
+
+  @Get('/:id')
+  getMoreDiaries(@GetUser() user: UserEntity, @Param('id') id: number) {
+    return this.diaryService.getMoreDiaries(user,id)
   }
 }
