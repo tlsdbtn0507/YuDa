@@ -13,6 +13,17 @@ export type Img = {
   url:string
 }
 
+export type DiaryType = {
+  id:number
+  diaryTitle:string
+  diaryContent:string
+  diaryDate:string
+  diaryDay:string
+  temp:number
+  rain:number
+  main:string
+}
+
 export interface DiarySummary{
   date:Dates,
   content:Contents,

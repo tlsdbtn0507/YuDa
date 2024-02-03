@@ -1,7 +1,9 @@
 import css from '../css/diary.module.css'
-import { DiarySummary } from '../model/types'
+import { DiarySummary, DiaryType } from '../model/types'
 
-const Diary = () => {
+const Diary = (props: { diaryInfo: DiaryType }) => {
+  
+  const { diaryInfo } = props;
 
   const diary:DiarySummary = {
     date:{
@@ -18,16 +20,18 @@ const Diary = () => {
     }
   }
 
+  const  [year, month  , date]  = diaryInfo.diaryDate.split('-');
+
+
   return(
     <div className={css.diary}>
       <div className={css.date}>
         <p>{diary.date.day}</p>
-        <p>{diary.date.month}<span>월</span> </p>
-        <p>{diary.date.date}<span>일</span></p>
+        <p>{month[0] === '0' ? month[1] : month}<span>월</span> </p>
+        <p>{date[0] === '0' ? date[1] : date}<span>일</span></p>
       </div>
       <div className={css.content}>
-        <p>{diary.content.title}</p>
-        {/* <p>{diary.content.body}</p> */}
+        <p>{diaryInfo.diaryTitle}</p>
       </div>
       <div className={css.img}>
         <img src={diary.img.url} />
