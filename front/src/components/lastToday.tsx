@@ -1,7 +1,7 @@
 import css from '../css/laTod.module.css'
 import { diaryStore } from '../store/diary/diaryStore'
-import Diary from './diary'
-import NullDiary from './nullDiary';
+import Diary from './diary/diary'
+import NullDiary from './diary/nullDiary';
 
 const LastToday = () => {
   

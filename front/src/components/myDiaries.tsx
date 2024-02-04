@@ -2,11 +2,11 @@ import { useQuery } from "react-query"
 import { getDiaries } from "../api/diary/diaryApi"
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-import Diary from "./diary";
+import Diary from "./diary/diary";
 
 import css from '../css/diaryList.module.css'
 import { diaryStore } from "../store/diary/diaryStore";
-import NullDiary from "./nullDiary";
+import NullDiary from "./diary/nullDiary";
 
 const MyDiaries = () => {
 
