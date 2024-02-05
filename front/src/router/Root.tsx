@@ -22,7 +22,8 @@ const Root = () =>{
       <main>
         <Outlet/>
       </main>
-      {pathname === '/' && <Intro/>}
+      {pathname === '/' && <Intro />}
+      <div className={css.footer}></div>
     </div>
   );
 }
