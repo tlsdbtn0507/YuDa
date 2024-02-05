@@ -1,5 +1,6 @@
 import LastToday from '../components/lastToday'
 import MyDiaries from '../components/myDiaries'
+import Nav from '../components/nav/nav'
 import css from '../css/main.module.css'
 
 const Main = () => {
@@ -15,7 +16,8 @@ const Main = () => {
     return `${year} . ${month+1} . ${date} . ${days[day]}`
   }
 
-  return(
+  return (
+    <>
     <div className={css.total}>
       <div className={css.wrapper}>
         <p className={css.today}>{daymaker()}</p>
@@ -23,6 +25,8 @@ const Main = () => {
         <MyDiaries/>
       </div>
     </div>
+    <Nav/>
+    </>
   )
 }
 
