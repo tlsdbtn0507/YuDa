@@ -1,31 +1,42 @@
+import { useQuery } from 'react-query'
 import LastToday from '../components/lastToday'
 import MyDiaries from '../components/myDiaries'
 import Nav from '../components/nav/nav'
+import DayMaker from '../components/util/dayMaker'
 import css from '../css/main.module.css'
+import { getDiaries } from '../api/diary/diaryApi'
+import { diaryStore } from '../store/diary/diaryStore'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
 
 const Main = () => {
 
-  const daymaker = () =>{
-    const year = new Date().getFullYear();
-    const month = new Date().getMonth();
-    const date = new Date().getDate();
-    const day = new Date().getDay();
+  const navigate = useNavigate()
 
-    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+  const { data, isError } = useQuery('diaries', getDiaries);
 
-    return `${year} . ${month+1} . ${date} . ${days[day]}`
-  }
+  const { getDiaries: fetchingDiary } = diaryStore(state => state);
+
+  useEffect(() => {
+    if (isError) {
+      alert('로그인 후 사용해 주세요!');
+      navigate('/login');
+      window.location.reload();
+    }
+    if (data) fetchingDiary(data)
+    
+  }, [isError,data]);
 
   return (
     <>
-    <div className={css.total}>
-      <div className={css.wrapper}>
-        <p className={css.today}>{daymaker()}</p>
-        <LastToday/>
-        <MyDiaries/>
+      <div className={css.total}>
+        <div className={css.wrapper}>
+          <DayMaker/> 
+          <LastToday/>
+          <MyDiaries/>
+        </div>
       </div>
-    </div>
-    <Nav/>
+      <Nav/>
     </>
   )
 }

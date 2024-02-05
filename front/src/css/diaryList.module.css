@@ -1,9 +1,15 @@
+.wrapper{
+  overflow: auto;
+  height: 42vh;
+}
+
 .h5{
   margin: 0;
 }
 
 .list{
+  /* overflow-y: scroll; */
   overflow: auto;
-  height: 42vh;
+  height: 100%;
 }
 

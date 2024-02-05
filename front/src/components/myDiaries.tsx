@@ -1,7 +1,4 @@
-import { useQuery } from "react-query"
-import { getDiaries } from "../api/diary/diaryApi"
-import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Diary from "./diary/diary";
 
 import css from '../css/diaryList.module.css'
@@ -10,21 +7,9 @@ import NullDiary from "./diary/nullDiary";
 
 const MyDiaries = () => {
 
-  const navigate = useNavigate();
+  const { diaries } = diaryStore(state => state);
 
-  const { data, isError, isFetching } = useQuery('diaries', getDiaries);
-
-  const { getDiaries: fetchingDiary ,diaries} = diaryStore(state => state);
-
-  useEffect(() => {
-    if (isError) {
-      alert('로그인 후 사용해 주세요!');
-      navigate('/login');
-      window.location.reload();
-    }
-    if (data) fetchingDiary(data)
-    
-  }, [isError,data]);
+  const currentScroll = useRef<HTMLInputElement>(null)
 
   let content
 
@@ -32,15 +17,13 @@ const MyDiaries = () => {
 
   if (diaries.length === 0) content = <NullDiary msg="아직 작성한 일기가" />;
 
-  if (isFetching) content = <p>데이터를 불러오는 중입니다...</p>;
-
   return(
-  <>
+  <div className={css.wrapper}>
     <h5 className={css.h5}>나의 일기들</h5>
-    <div className={css.list}>
+    <div className={css.list} ref={currentScroll}>
       {content}
     </div>
-  </>
+  </div>
   )
 }
 
