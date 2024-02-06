@@ -1,5 +1,6 @@
 .wrapper{
-  overflow: auto;
+    overflow-y: scroll;
+
   height: 42vh;
 }
 
@@ -8,8 +9,13 @@
 }
 
 .list{
-  /* overflow-y: scroll; */
-  overflow: auto;
   height: 100%;
+  padding-bottom: 3rem;
+}
+.more{
+  justify-items: center;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
