@@ -8,4 +8,13 @@ export const getDiaries = async () => {
   } catch (error) {
     throw new Error()
   }
-}
+};
+
+export const fetchMoreDiaries = async (id: number) => {
+  try {
+    const { data } = await API.get(`/diary/${id}`);
+    return data
+  } catch (error) {
+    throw new Error()
+  }
+};
