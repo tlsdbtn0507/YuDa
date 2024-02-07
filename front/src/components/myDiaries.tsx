@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Diary from "./diary/diary";
 
 import css from '../css/diaryList.module.css'
@@ -7,11 +7,13 @@ import NullDiary from "./diary/nullDiary";
 import LoadingSpin from "./util/loadingSpin";
 
 const MyDiaries = () => {
-  const [moreDiv, setMoreDiv] = useState(false);
+  const [moreDiv, setMoreDiv] = useState(true);
+  const [count, setCount] = useState(0)
 
-  const { diaries } = diaryStore(state => state);
+  const { diaries ,getMoreDiaries } = diaryStore(state => state);
 
-  const currentScroll = useRef<HTMLInputElement>(null)
+  const currentScroll = useRef<HTMLInputElement>(null);
+  const moreScroll = useRef<HTMLInputElement>(null);
 
   let content
 
@@ -19,28 +21,36 @@ const MyDiaries = () => {
 
   if (diaries.length === 0) content = <NullDiary msg="아직 작성한 일기가" />;
 
+  const getMoreHandler = async (id: number) => {
+    if (count === 20) {
+      const more = await getMoreDiaries(id);
+      setTimeout(() => {
+        setCount(0);
+        setMoreDiv(more)
+      }, 1);
+    }
+  }
 
   const addMoreDiaries = () => {
     const scrollContainer = currentScroll.current;
-
-    if (scrollContainer) {
+    if ( scrollContainer) {
       const { scrollHeight, clientHeight, scrollTop } = scrollContainer;
-      console.log(scrollHeight, clientHeight, scrollTop)
       if (scrollHeight <= clientHeight + scrollTop) {
-        setMoreDiv(true)
-        console.log('getMore')
-      } else setMoreDiv(false)
+        setCount(prev => prev += 1)
+        getMoreHandler(diaries[diaries.length-1].id)
+      }
     }
   }
 
   return (
   <>
     <h5 className={css.h5}>나의 일기들</h5>
-    <div className={css.wrapper}ref={currentScroll} onScroll={addMoreDiaries}>
+    <div className={css.wrapper} ref={currentScroll} onScroll={addMoreDiaries}>
       <div className={css.list} >
           {content}
-          <div className={css.more}>
-            <LoadingSpin/>
+          <div className={css.more} ref={moreScroll}>
+            { moreDiv && <LoadingSpin/>}
+            {/* <LoadingSpin/> */}
           </div>
       </div>
     </div>

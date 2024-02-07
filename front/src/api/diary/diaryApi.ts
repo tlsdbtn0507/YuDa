@@ -1,3 +1,4 @@
+import { DiaryType } from "../../model/types";
 import API from "../api"
 
 export const getDiaries = async () => {
@@ -10,7 +11,7 @@ export const getDiaries = async () => {
   }
 };
 
-export const fetchMoreDiaries = async (id: number) => {
+export const fetchMoreDiaries = async (id: number):Promise<DiaryType[]> => {
   try {
     const { data } = await API.get(`/diary/${id}`);
     return data
