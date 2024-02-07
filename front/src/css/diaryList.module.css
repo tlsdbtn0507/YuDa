@@ -1,7 +1,7 @@
 .wrapper{
-    overflow-y: scroll;
-
+  overflow-y: scroll;
   height: 42vh;
+  /* height: inherit; */
 }
 
 .h5{

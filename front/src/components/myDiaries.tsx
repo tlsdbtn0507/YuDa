@@ -8,7 +8,7 @@ import LoadingSpin from "./util/loadingSpin";
 
 const MyDiaries = () => {
   const [moreDiv, setMoreDiv] = useState(true);
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   const { diaries ,getMoreDiaries } = diaryStore(state => state);
 
@@ -33,6 +33,7 @@ const MyDiaries = () => {
 
   const addMoreDiaries = () => {
     const scrollContainer = currentScroll.current;
+    if (diaries.length < 5) return;
     if ( scrollContainer) {
       const { scrollHeight, clientHeight, scrollTop } = scrollContainer;
       if (scrollHeight <= clientHeight + scrollTop) {
@@ -48,10 +49,10 @@ const MyDiaries = () => {
     <div className={css.wrapper} ref={currentScroll} onScroll={addMoreDiaries}>
       <div className={css.list} >
           {content}
+          {diaries.length !== 0 &&
           <div className={css.more} ref={moreScroll}>
-            { moreDiv && <LoadingSpin/>}
-            {/* <LoadingSpin/> */}
-          </div>
+            { (moreDiv && diaries.length ===5) && <LoadingSpin/>}
+          </div>}
       </div>
     </div>
   </>
