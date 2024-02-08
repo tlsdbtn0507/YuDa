@@ -46,7 +46,9 @@ export class UserService {
       const refreshToken = await this.jwtService.sign({
        id, expiresIn: process.env.JWT_EXPIRES_REFRESH
       });
-      const accessToken = await this.jwtService.sign(payload)
+      const accessToken = await this.jwtService.sign(payload);
+
+      await this.userRepository.update({ id: getUser.id }, { refreshToken });
 
       return { accessToken,refreshToken };
     }

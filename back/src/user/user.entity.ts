@@ -15,6 +15,9 @@ export class UserEntity extends BaseEntity{
   
   @Column()
   pw: string
+
+  @Column({nullable:true})
+  refreshToken: string
   
   @OneToMany( type=>DiaryEntity , diary=>diary.user  )
   diary:DiaryEntity
