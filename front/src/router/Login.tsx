@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { useMutation } from 'react-query'
 import { login } from '../api/users/usersApi'
+import authStore from '../store/auth/authStore'
 
 const Login = () => { 
 
   const idRef = useRef<HTMLInputElement>(null);
   const pwRef = useRef<HTMLInputElement>(null);
 
-  const duration = process.env.REACT_APP_DURATION;
-  console.log(duration)
+  const { setTokenTime } = authStore(state => state)
   
   const navigate = useNavigate();
 
@@ -23,6 +23,7 @@ const Login = () => {
       if (data) {
         localStorage.setItem('refreshToken', data.refreshToken);
         localStorage.setItem('duration', `${process.env.REACT_APP_DURATION}`);
+        setTokenTime()
         navigate('/main');
       } else {
         alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요');
