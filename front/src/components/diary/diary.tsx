@@ -26,7 +26,7 @@ const Diary = (props: { diaryInfo: DiaryType }) => {
   return(
     <div className={css.diary}>
       <div className={css.date}>
-        <p>{diary.date.day}</p>
+        <p>{diaryInfo.diaryDay}</p>
         <p>{month[0] === '0' ? month[1] : month}<span>월</span> </p>
         <p>{date[0] === '0' ? date[1] : date}<span>일</span></p>
       </div>
