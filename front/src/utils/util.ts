@@ -9,7 +9,7 @@ export const toSendData = (data: FormData) => {
   return toReturn
 }
 
-const tokenTimer = () =>
+export const tokenTimer = () =>
   setInterval(() => {
     let duration = localStorage.getItem('duration') as string;
     localStorage.setItem('duration', `${+duration - 1000}`)
