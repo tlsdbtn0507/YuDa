@@ -1,17 +1,17 @@
 import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
-import { UserRepository } from './user.repository';
 import { CreateUserDto } from './dto/createUser.Dto';
 import { SignUserDto } from './dto/signUserDto';
 import * as bcrypt from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: UserRepository,
+    private readonly userService: Repository<UserEntity>,
     private jwtService:JwtService
   ) { }
   async signUp(createUserDto: CreateUserDto): Promise<UserEntity> {
@@ -21,10 +21,10 @@ export class UserService {
     
     const hashedPw = await bcrypt.hash(pw, salt);
 
-    const user = this.userRepository.create({ userId, name, pw:hashedPw });
+    const user = this.userService.create({ userId, name, pw:hashedPw });
 
     try {
-      await this.userRepository.save(user);
+      await this.userService.save(user);
       return user
     } catch (error) {
       if (error.code === '23505') throw new ConflictException('이미 존재하는 아이디입니다');
@@ -33,13 +33,13 @@ export class UserService {
   }
 
   async checkIdDuple(id:string) {
-    const isIdDuple = await this.userRepository.findOne( {where:{userId:id}} );
+    const isIdDuple = await this.userService.findOne( {where:{userId:id}} );
     return isIdDuple === null ? true : false;
   }
 
   async login(signUserDto:SignUserDto) {
     const { id, pw } = signUserDto;
-    const getUser = await this.userRepository.findOne({ where: { userId:id } });
+    const getUser = await this.userService.findOne({ where: { userId:id } });
 
     if (getUser && (await bcrypt.compare(pw, getUser.pw))) {
       const payload = { id,name:getUser.name };
@@ -48,7 +48,7 @@ export class UserService {
       });
       const accessToken = await this.jwtService.sign(payload);
 
-      await this.userRepository.update({ id: getUser.id }, { refreshToken });
+      await this.userService.update({ id: getUser.id }, { refreshToken });
 
       return { accessToken,refreshToken };
     }
