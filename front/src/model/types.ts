@@ -37,3 +37,8 @@ export interface sendObj {
 export interface toSendDataObj {
   [index:string]:string
 }
+
+export interface BtnType {
+  onClick: (e: React.FormEvent) => void,
+  isIdVal: boolean | string
+}
