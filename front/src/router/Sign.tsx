@@ -1,29 +1,25 @@
-import { Form } from 'react-router-dom'
 import PwDiv from '../components/sign/pwDiv';
-import { userStore } from '../store/user/userStore';
 import IdCheckBtn from '../components/sign/idCheckBtn';
-
 import css from '../css/sign.module.css'
-import { useQuery } from 'react-query';
+
+import { Form } from 'react-router-dom'
+import { userStore } from '../store/user/userStore';
 import { useRef, useState } from 'react';
 import { checkIdDuple } from '../api/users/usersApi';
+import { useMutation } from '@tanstack/react-query';
 
 const Sign = () => {
 
-  const [isClicked, setIsClicked] = useState('');
-  const [idChecked, setIdChecked] = useState(false);
+  const [idChecked, setIdChecked] = useState<boolean|string>('not');
 
   const idToCheckDuple = useRef<HTMLInputElement>(null);
 
   const { pwCheck } = userStore(state => state);
 
-  const { data } = useQuery({
-    queryKey: ['idcheck', { isClicked }],
-    queryFn: () => checkIdDuple(isClicked),
-    enabled: isClicked !== '',
-    onSuccess: (data) =>  data ? setIdChecked(true) : setIdChecked(false),
-    staleTime: 10000,
-  })
+  const { mutate } = useMutation({
+    mutationFn: checkIdDuple,
+    onSuccess: (data) => setIdChecked(data)
+  });
 
   const doOtherThing = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,10 +27,12 @@ const Sign = () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     
     if (value === '' || korean.test(value) || value.length < 4) {
-      idToCheckDuple.current?.focus()
+      idToCheckDuple.current?.focus();
+      setIdChecked('not');
+      idToCheckDuple.current!.value = '';
       return alert('ID를 확인해주세요')
     }
-    setIsClicked(value);
+    mutate(value)
   };
 
   const permitSub = (e: React.FormEvent) => {

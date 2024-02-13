@@ -19,7 +19,7 @@ export const sendSign = async ({request}:sendObj) =>{
 }
 
 export const checkIdDuple = async (idToCheckDuple:string):Promise<boolean> => {
-  const res = await API.get(`/user/idcheck/${idToCheckDuple}`);
+  const res = await API.post(`/user/idcheck`,{id:idToCheckDuple});
   return res.data
 }
 
