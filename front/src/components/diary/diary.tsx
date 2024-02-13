@@ -20,7 +20,7 @@ const Diary = (props: { diaryInfo: DiaryType }) => {
     }
   }
 
-  const  [year, month  , date]  = diaryInfo.diaryDate.split('-');
+  const  [_, month  , date]  = diaryInfo.diaryDate.split('-');
 
 
   return(
