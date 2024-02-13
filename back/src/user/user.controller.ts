@@ -15,9 +15,10 @@ export class UserController {
     return this.userService.signUp(creatUserDto)
   }
 
-  @Get('/idcheck/:id')
-  checkIdDuple(@Param() id: {id:string} ) {
-    return this.userService.checkIdDuple(id)
+  @Post('/idcheck')
+  checkIdDuple(@Body() idCheck: { id: string }) {
+    const { id } = idCheck;
+    return this.userService.checkIdDuple(id);
   }
 
   @Post('/login')

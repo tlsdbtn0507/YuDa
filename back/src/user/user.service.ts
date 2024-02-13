@@ -32,8 +32,8 @@ export class UserService {
     }
   }
 
-  async checkIdDuple(idcheck:{id:string}) {
-    const isIdDuple = await this.userRepository.findOne( {where:{userId:idcheck.id}} );
+  async checkIdDuple(id:string) {
+    const isIdDuple = await this.userRepository.findOne( {where:{userId:id}} );
     return isIdDuple === null ? true : false;
   }
 
