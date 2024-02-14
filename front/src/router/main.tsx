@@ -9,6 +9,7 @@ import { getDiaries } from '../api/diary/diaryApi'
 import { diaryStore } from '../store/diary/diaryStore'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
+import { tokenTimer } from '../utils/util'
 
 const Main = () => {
 
@@ -30,9 +31,12 @@ const Main = () => {
     }
 
     if (data) fetchingDiary(data);
+
+    setInterval(() => tokenTimer(), 1000);
     
   }, [isError, data]);
-  
+
+
   return (
     <>
       <div className={css.total}>
