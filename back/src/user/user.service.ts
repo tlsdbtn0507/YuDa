@@ -43,10 +43,10 @@ export class UserService {
 
     if (getUser && (await bcrypt.compare(pw, getUser.pw))) {
       const payload = { id,name:getUser.name };
-      const refreshToken = await this.jwtService.sign({
-       id, expiresIn: process.env.JWT_EXPIRES_REFRESH
+      const refreshToken = this.jwtService.sign({
+       id, expiresIn: process.env.JWT_EXPIRES_ACCESS
       });
-      const accessToken = await this.jwtService.sign(payload);
+      const accessToken = this.jwtService.sign(payload);
 
       await this.userService.update({ id: getUser.id }, { refreshToken });
 

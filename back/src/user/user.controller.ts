@@ -29,7 +29,7 @@ export class UserController {
     const { accessToken } = await this.userService.login(signUserDto);
 
     res.cookie('Auth', accessToken, {
-      expires: new Date(Date.now() + +process.env.JWT_EXPIRES_ACCESS),
+      maxAge:+process.env.JWT_EXPIRES_ACCESS,
       httpOnly:true
     })
     
