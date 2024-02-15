@@ -4,6 +4,8 @@ import { CreateUserDto } from './dto/createUser.Dto';
 import { SignUserDto } from './dto/signUserDto';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/configs/get-user.decorator';
+import { UserEntity } from './user.entity';
 
 @Controller('user')
 export class UserController {
@@ -39,8 +41,17 @@ export class UserController {
   @Post('/renew')
   @UseGuards(AuthGuard())
   async renewToken(
-    @Body() refreshToken: string) {
-    console.log(refreshToken)
+    @GetUser() user: UserEntity,
+    @Res({ passthrough: true }) res: Response,
+    @Body() token: { refreshToken: string }) {
+    const result = await this.userService.renewToken(token, user);
+
+    result !== false && res.cookie('Auth', result.accessToken, {
+      maxAge: +process.env.JWT_EXPIRES_ACCESS,
+      httpOnly: true
+    });
+
+    return result
   }
 
 

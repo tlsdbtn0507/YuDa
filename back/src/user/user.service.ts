@@ -56,4 +56,16 @@ export class UserService {
 
   }
 
+  async renewToken(token: { refreshToken: string }, user:UserEntity) {
+    const { refreshToken } = token;
+    const checkToken = await this.userService.findOne({ where: { refreshToken } });
+    const condition = checkToken.id === user.id;
+    
+    const accessToken = this.jwtService.sign({
+      id: checkToken.userId,
+      name: checkToken.name
+    });
+    return condition ? {accessToken} : false;
+  }
+
 }
