@@ -7,22 +7,23 @@ import css from '../css/main.module.css'
 import { useQuery } from '@tanstack/react-query'
 import { getDiaries } from '../api/diary/diaryApi'
 import { diaryStore } from '../store/diary/diaryStore'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { tokenTimer } from '../utils/util'
+import { tokenSet } from '../utils/util'
 
 const Main = () => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { data, isError } = useQuery({
     queryKey: ['diaries'],
     queryFn: getDiaries,
-    gcTime:Infinity
   });
 
   const { getDiaries: fetchingDiary } = diaryStore(state => state);
-  
+
+  const token = localStorage.getItem('refreshToken') as string;
+
   useEffect(() => {
     if (isError) {
       alert('로그인 후 사용해 주세요!');
@@ -32,11 +33,10 @@ const Main = () => {
 
     if (data) fetchingDiary(data);
 
-    setInterval(() => tokenTimer(), 1000);
-    
-  }, [isError, data]);
+    tokenSet(token);
 
-
+  }, [isError, data,token]);
+  
   return (
     <>
       <div className={css.total}>

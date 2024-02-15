@@ -1,6 +1,5 @@
+import { renewToken } from "../api/users/usersApi";
 import { toSendDataObj } from "../model/types";
-import { jwtDecode } from 'jwt-decode';
-
 
 export const toSendData = (data: FormData) => {
   const toReturn: toSendDataObj = {};
@@ -10,21 +9,15 @@ export const toSendData = (data: FormData) => {
   return toReturn
 }
 
-export const tokenTimer = () => {
-  const token = localStorage.getItem('refreshToken') as string;
-  const delay = process.env.REACT_APP_DELAY as string;
-  
-  const { expiresIn , iat } = jwtDecode<{ expiresIn: number, iat: number }>(token);
-  const condition = new Date().getTime() >= +expiresIn + iat*1000 - +delay;
-
-  if (condition) {
-    console.log('bye');
-    return
-  }
-  else return
-}
-
-
-export const tokenSet = (token:string) => {
+export const tokenSet = (token: string) => {
   localStorage.setItem('refreshToken', token);
+
+  const refreshToken = localStorage.getItem('refreshToken') as string;
+
+  const timer = process.env.REACT_APP_DELAY as string;
+
+  setTimeout( async() => {
+    const res = await renewToken(token);
+    typeof res !== "boolean" && tokenSet(refreshToken)
+  }, +timer);
 }

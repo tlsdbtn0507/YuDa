@@ -30,5 +30,14 @@ export const login = async (request: { id: string, pw: string }) => {
   } catch (error) {
     console.log(error)
   }
-  return null
 }
+
+export const renewToken = async (refreshToken: string) 
+  :Promise<boolean | { accessToken: string }> => {
+  try {
+    const { data } = await API.post('/user/renew', { refreshToken });
+    return data
+  } catch (error) {
+    throw new Error()
+  }
+};
