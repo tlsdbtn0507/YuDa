@@ -19,6 +19,7 @@ const Login = () => {
     mutationFn: login,
     onSuccess(data) {
       if (data) {
+        localStorage.setItem('refreshToken',data.refreshToken)
         localStorage.setItem('nonRef','nonRef')
         navigate('/main');
       } else {

@@ -40,3 +40,12 @@ export const renewToken = async (refreshToken: string) : Promise<boolean> => {
     throw new Error()
   }
 };
+
+export const logoutPost =async (refreshToken:string) => {
+  try {
+    const { data } = await API.post('/user/logout', { refreshToken });
+    return data;
+  } catch (error) {
+    
+  }
+}
