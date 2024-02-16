@@ -60,12 +60,19 @@ export class UserService {
     const { refreshToken } = token;
     const checkToken = await this.userService.findOne({ where: { refreshToken } });
     const condition = checkToken.id === user.id;
-    
+
     const accessToken = this.jwtService.sign({
       id: checkToken.userId,
       name: checkToken.name
     });
     return condition ? {accessToken} : false;
+  };
+
+  async logout(token:{refreshToken:string}, user:UserEntity) {
+    const { refreshToken } = token;
+    const checkToken = await this.userService.findOne({ where: { refreshToken } });
+    await this.userService.update({ id: checkToken.id }, { refreshToken: null });
+    return checkToken.id === user.id;
   }
 
 }

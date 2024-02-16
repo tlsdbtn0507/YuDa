@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post ,Get, UsePipes, ValidationPipe, Res, UseGuards} from '@nestjs/common';
+import { Body, Controller, Post, UsePipes, ValidationPipe, Res, UseGuards} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.Dto';
 import { SignUserDto } from './dto/signUserDto';
@@ -43,16 +43,30 @@ export class UserController {
   async renewToken(
     @GetUser() user: UserEntity,
     @Res({ passthrough: true }) res: Response,
-    @Body() token: { refreshToken: string }) {
+    @Body() token: { refreshToken: string }
+  ) {
     const result = await this.userService.renewToken(token, user);
 
-    result !== false && res.cookie('Auth', result.accessToken, {
+    const condition = result !== false
+
+    condition && res.cookie('Auth', result.accessToken, {
       maxAge: +process.env.JWT_EXPIRES_ACCESS,
       httpOnly: true
     });
 
-    return result
+    return condition ? true : result;
   }
 
+  @Post('/logout')
+  @UseGuards(AuthGuard())
+  async logout(
+    @GetUser() user: UserEntity,
+    @Res({ passthrough: true }) res: Response,
+    @Body() token: { refreshToken: string }
+  ) {
+    const result = await this.userService.logout(token, user);
+    result && res.cookie('Auth', null, { maxAge: 0 });
+    return result
+  }
 
 }
