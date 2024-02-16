@@ -16,8 +16,14 @@ export const tokenSet = (token: string) => {
 
   const timer = process.env.REACT_APP_DELAY as string;
 
-  setTimeout( async() => {
+  const refCondition = localStorage.getItem('nonRef');
+
+  if (refCondition === 'nonRef') {
+    renewToken(refreshToken)
+      .then(() => setTimeout(() => tokenSet(refreshToken), +timer));
+    return 
+  } else setTimeout( async() => {
     const res = await renewToken(token);
-    typeof res !== "boolean" && tokenSet(refreshToken)
+    res && tokenSet(refreshToken);
   }, +timer);
 }

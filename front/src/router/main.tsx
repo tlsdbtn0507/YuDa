@@ -7,7 +7,7 @@ import css from '../css/main.module.css'
 import { useQuery } from '@tanstack/react-query'
 import { getDiaries } from '../api/diary/diaryApi'
 import { diaryStore } from '../store/diary/diaryStore'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { tokenSet } from '../utils/util'
 
@@ -35,7 +35,7 @@ const Main = () => {
 
     tokenSet(token);
 
-  }, [isError, data,token]);
+  }, [isError, data]);
   
   return (
     <>
