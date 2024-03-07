@@ -1,11 +1,10 @@
 import { faCirclePlus, faClipboard, faUser } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
-import css from '../../css/lowNav.module.css'
-import NavBtn from "./navBtn"
 import { useMutation } from "@tanstack/react-query"
 import { logoutPost } from "../../api/users/usersApi"
 import { useNavigate } from "react-router"
+
+import css from '../../css/lowNav.module.css'
+import NavBtn from "./navBtn"
 
 const Nav = () => {
   const navigate = useNavigate()
