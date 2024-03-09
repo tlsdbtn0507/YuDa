@@ -1,0 +1,22 @@
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
+before_install: 
+  - docker build -t yusu/yuda -f ./frontend/Dockerfile.dev ./frontend
+
+script:
+  - docker run -e CI=true yusu/yuda npm test
+
+after_success:
+  - docker build -t yusu/docker-frontend ./frontend
+  - docker build -t yusu/docker-backend ./backend
+  - docker build -t yusu/docker-nignx ./nignx
+
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+  - docker push yusu/docker-frontend
+  - docker push yusu/docker-backend
+  - docker push yusu/docker-nginx
