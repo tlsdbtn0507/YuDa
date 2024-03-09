@@ -3,7 +3,7 @@ import Root from "./Root";
 import Login from './Login';
 import Sign from './Sign';
 import Main from './Main';
-import { login, sendSign } from '../api/users/usersApi';
+import { sendSign } from '../api/users/usersApi';
 
 const router = createBrowserRouter([
   {
