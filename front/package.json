@@ -58,6 +58,7 @@
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
+    "@jest/types": "^29.6.3",
     "jest": "^27.5.1"
   }
 }
