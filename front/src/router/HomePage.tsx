@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { tokenSet } from '../utils/util'
 
-const Main = () => {
+const HomePage = () => {
 
   const navigate = useNavigate();
 
@@ -51,4 +51,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default HomePage

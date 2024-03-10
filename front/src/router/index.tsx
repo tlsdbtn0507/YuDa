@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Root from "./Root";
 import Login from './Login';
 import Sign from './Sign';
-import Main from './Main';
+import HomePage from './HomePage';
 import { sendSign } from '../api/users/usersApi';
 
 const router = createBrowserRouter([
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/main",
-        element:<Main/>
+        element:<HomePage/>
       }
     ]
   }
