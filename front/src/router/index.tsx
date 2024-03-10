@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Root from "./Root";
-import Login from './Login';
-import Sign from './Sign';
-import HomePage from './HomePage';
+import Root from "./root";
+import Login from './login';
+import Sign from './sign';
+import HomePage from './homePage';
 import { sendSign } from '../api/users/usersApi';
 
 const router = createBrowserRouter([
