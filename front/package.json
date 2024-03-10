@@ -31,9 +31,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --env=node",
+    "test": "jest",
     "eject": "react-scripts eject"
-
   },
   "eslintConfig": {
     "extends": [
@@ -59,16 +58,5 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "jest": "^27.5.1"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "roots": [
-      "<rootDir>"
-    ]
   }
-  
 }
