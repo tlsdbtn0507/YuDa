@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import css from '../css/app.module.css';
 import Intro from '../components/intro';
+import css from '../css/app.module.css';
 import { Outlet, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 
