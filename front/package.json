@@ -31,8 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
-    "test:ci":"npm run test -- --coverage --ci --testResultsProcessor=\"jest-junit\"",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --env=node",
     "eject": "react-scripts eject"
 
   },
