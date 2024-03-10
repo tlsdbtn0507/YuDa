@@ -23,7 +23,7 @@
     "baseUrl": "src"
   },
   "include": [
-    "src",
+    "src/**/*",
     "setupTests.ts"  
   ]
 }
