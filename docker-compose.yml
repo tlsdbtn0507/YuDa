@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend:
-    image: yusu/docker-front
+    image: yusushin/docker-front
 
     volumes:
       - /app/node_modules
@@ -11,7 +11,7 @@ services:
     stdin_open: true
 
   backend:
-    image: yusu/docker-back
+    image: yusushin/docker-back
     container_name: app_back
     volumes:
       - /app/node_modules
@@ -20,7 +20,7 @@ services:
   nginx:
     restart: always
 
-    image: yusu/docker-nginx
+    image: yusushin/docker-nginx
 
     ports:
       - "80:80"

@@ -6,17 +6,17 @@ services:
   - docker
 
 before_install: 
-  - docker build -t yusu/yuda -f ./front/Dockerfile.dev ./front
+  - docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
 
 script:
-  - docker run -e CI=true yusu/yuda npm test
+  - docker run -e CI=true yusushin/yuda npm test
 
 after_success:
-  - docker build -t yusu/docker-frontend ./front
-  - docker build -t yusu/docker-backend ./back
-  - docker build -t yusu/docker-nignx ./nignx
+  - docker build -t yusushin/docker-frontend ./front
+  - docker build -t yusushin/docker-backend ./back
+  - docker build -t yusushin/docker-nignx ./nignx
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
-  - docker push yusu/docker-frontend
-  - docker push yusu/docker-backend
-  - docker push yusu/docker-nginx
+  - docker push yusushin/docker-frontend
+  - docker push yusushin/docker-backend
+  - docker push yusushin/docker-nginx
