@@ -1,5 +1,5 @@
 import { redirect, useNavigate } from 'react-router';
-import css from '../css/App.module.css';
+import css from '../css/app.module.css';
 
 const Intro = () =>{
   const navigate = useNavigate()
