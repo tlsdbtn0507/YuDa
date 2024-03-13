@@ -14,7 +14,7 @@ script:
 after_success:
   - docker build -t yusushin/docker-frontend ./front
   - docker build -t yusushin/docker-backend ./back
-  - docker build -t yusushin/docker-nignx ./nignx
+  - docker build -t yusushin/docker-nginx ./nginx
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
   - docker push yusushin/docker-frontend
