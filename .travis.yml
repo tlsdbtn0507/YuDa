@@ -27,7 +27,7 @@ deploy:
   app: 'Yuda'
   env: 'Yuda-env'
   bucket_name: elasticbeanstalk-ap-northeast-2-270304892797
-  bucke_path: 'Yuda'
+  bucket_path: 'Yuda'
   on:
     branch: Main
   access_key_id: $AWS_ACCESS_KEY
