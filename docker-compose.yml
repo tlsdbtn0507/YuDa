@@ -16,6 +16,14 @@ services:
     volumes:
       - /app/node_modules
       - ./back:/app
+    environment:
+      HOST:$HOST
+      USERNAME:$USERNAME
+      PASSWORD:$PASSWORD
+      DATABASE:$DATABASE
+      PORT:$PORT
+      SYNCHRONIZE:false
+
     
   nginx:
     restart: always
