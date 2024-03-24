@@ -20,3 +20,15 @@ after_success:
   - docker push yusushin/docker-frontend
   - docker push yusushin/docker-backend
   - docker push yusushin/docker-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: ap-northeast-2
+  app: 'Yuda'
+  env: 'Yuda-env'
+  bucket_name: elasticbeanstalk-ap-northeast-2-270304892797
+  bucke_path: 'Yuda'
+  on:
+    branch: Main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
