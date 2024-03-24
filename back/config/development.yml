@@ -2,4 +2,4 @@ db:
   host: 'localhost'
   username: 'postgres'
   password: 'postgres'
-  synchronize: true
+  synchronize: false

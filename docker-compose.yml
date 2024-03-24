@@ -17,12 +17,12 @@ services:
       - /app/node_modules
       - ./back:/app
     environment:
-      HOST:$HOST
-      USERNAME:$USERNAME
-      PASSWORD:$PASSWORD
-      DATABASE:$DATABASE
-      PORT:$PORT
-      SYNCHRONIZE:false
+      POSTGRES_HOST:$HOST
+      POSTGRES_USERNAME:$USERNAME
+      POSTGRES_PASSWORD:$PASSWORD
+      POSTGRES_DATABASE:$DATABASE
+      POSTGRES_PORT:$PORT
+      POSTGRES_SYNCHRONIZE:false
 
     
   nginx:
