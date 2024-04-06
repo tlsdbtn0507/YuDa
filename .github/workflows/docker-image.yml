@@ -13,8 +13,13 @@ jobs:
     steps:
     - name: Get Code 
       uses: actions/checkout@v3
+
     - name: Login DockerHub
       run: echo "${{secrets.DOCKER_HUB_PASSWORD}}" | docker login -u "${{secrets.DOCKER_HUB_ID}}" --password-stdin 
+    
+    - name: before_install
+      run : docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
 
-    # - name: Build the Docker image
-    #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Docker Test
+      run : docker run -e CI=true yusushin/yuda npm test 
+
