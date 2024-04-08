@@ -34,4 +34,18 @@ jobs:
       run: docker push yusushin/docker-backend
     - name: push nginx docker
       run: docker push yusushin/docker-nginx
+    
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
 
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v21
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: Yuda
+        environment_name: Yuda-env
+        version_label: ${{ github.sha }}
+        region: ap-northeast-2
+        deployment_package: deploy.zip
+        existing_bucket_name: elasticbeanstalk-ap-northeast-2-975050092500
