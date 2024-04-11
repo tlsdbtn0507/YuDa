@@ -12,17 +12,18 @@ services:
 
   backend:
     image: yusushin/docker-back
-    # container_name: app_back
+    container_name: app_back
     volumes:
       - /app/node_modules
       - ./back:/app
+
     environment:
       POSTGRES_HOST:$POSTGRES_HOST
       POSTGRES_USERNAME:$POSTGRES_USERNAME
       POSTGRES_PASSWORD:$POSTGRES_PASSWORD
       POSTGRES_DATABASE:$POSTGRES_DATABASE
       POSTGRES_PORT:$POSTGRES_PORT
-      POSTGRES_SYNCHRONIZE:false
+
 
     
   nginx:
