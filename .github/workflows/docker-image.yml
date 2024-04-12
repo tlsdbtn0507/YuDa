@@ -47,6 +47,6 @@ jobs:
         environment_name: Yuda-env
         version_label: ${{ github.sha }}
         region: ap-northeast-2
-        use_existing_version_if_available: true
+        # use_existing_version_if_available: true
         deployment_package: deploy.zip
         existing_bucket_name: elasticbeanstalk-ap-northeast-2-975050092500
