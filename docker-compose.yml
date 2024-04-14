@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend:
-    image: yusushin/docker-front
+    image: yusushin/docker-frontend
 
     volumes:
       - /app/node_modules
@@ -11,7 +11,7 @@ services:
     stdin_open: true
 
   backend:
-    image: yusushin/docker-back
+    image: yusushin/docker-backend
     container_name: app_back
     volumes:
       - /app/node_modules
