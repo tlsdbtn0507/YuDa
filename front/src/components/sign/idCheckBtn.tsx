@@ -10,7 +10,9 @@ const IdCheckBtn = (props: BtnType) => {
   const send = (e: React.FormEvent) => {
     e.preventDefault();
     props.onClick(e);
-    setIsClicked(true)
+    setIsClicked(true);
+
+    console.log('idcheck btn clicked')
   };
   
   let btnContent = "아이디 중복 조회";
