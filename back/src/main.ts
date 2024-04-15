@@ -13,7 +13,7 @@ async function bootstrap() {
     }
   });
   // const port = serverConfig.get('port');
-  const port = process.env.HOSTPORT;
+  const port = process.env.POSTGRES_HOSTPORT;
 
   app.use(cookieParser());
 
