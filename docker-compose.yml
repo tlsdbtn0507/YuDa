@@ -7,7 +7,9 @@ services:
     volumes:
       - /app/node_modules
       - ./front:/app
-    
+    environment:
+      REACT_APP_SERVER: $REACT_APP_SERVER
+      
     stdin_open: true
 
   backend:
