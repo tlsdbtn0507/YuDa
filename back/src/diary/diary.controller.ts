@@ -5,7 +5,7 @@ import { GetUser } from 'src/configs/get-user.decorator';
 import { UserEntity } from 'src/user/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('diary')
+@Controller('/api/diary')
 @UseGuards(AuthGuard())
 export class DiaryController {
   constructor(private diaryService: DiaryService) { }
