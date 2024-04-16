@@ -11,8 +11,6 @@ const IdCheckBtn = (props: BtnType) => {
     e.preventDefault();
     props.onClick(e);
     setIsClicked(true);
-
-    console.log('idcheck btn clicked')
   };
   
   let btnContent = "아이디 중복 조회";

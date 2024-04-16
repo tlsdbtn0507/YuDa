@@ -3,8 +3,6 @@ import { AppModule } from './app.module';
 import * as config from 'config';
 import * as cookieParser from 'cookie-parser';
 
-const serverConfig = config.get('server');
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
@@ -12,7 +10,6 @@ async function bootstrap() {
       credentials: true,
     }
   });
-  // const port = serverConfig.get('port');
   const port = process.env.POSTGRES_HOSTPORT;
 
   app.use(cookieParser());
