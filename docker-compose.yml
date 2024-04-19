@@ -8,7 +8,7 @@ services:
       - /app/node_modules
       - ./front:/app
     environment:
-      - REACT_APP_SERVER = ${REACT_APP_SERVER}
+      - REACT_APP_SERVER=${REACT_APP_SERVER}
       
     stdin_open: true
 
@@ -20,13 +20,13 @@ services:
       - ./back:/app
 
     environment:
-      POSTGRES_HOST : ${POSTGRES_HOST}
-      POSTGRES_USERNAME : ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD : ${POSTGRES_PASSWORD}
-      POSTGRES_DATABASE : ${POSTGRES_DATABASE}
-      POSTGRES_PORT : ${POSTGRES_PORT}
-      POSTGRES_HOSTPORT : ${POSTGRES_HOSTPORT}
-      POSTGRES_SYNCHRONIZE : false
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_HOSTPORT=${POSTGRES_HOSTPORT}
+      - POSTGRES_SYNCHRONIZE=false
   nginx:
     restart: always
 
