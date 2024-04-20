@@ -4,6 +4,9 @@ services:
   frontend:
     image: yusushin/docker-frontend
 
+    environment:
+      - REACT_APP_SERVER=${REACT_APP_SERVER}
+
     volumes:
       - /app/node_modules
       - ./front:/app
