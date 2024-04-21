@@ -27,7 +27,7 @@ services:
       - POSTGRES_DATABASE=${POSTGRES_DATABASE}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_HOSTPORT=${POSTGRES_HOSTPORT}
-      - POSTGRES_SYNCHRONIZE=false
+      
   nginx:
     restart: always
 
