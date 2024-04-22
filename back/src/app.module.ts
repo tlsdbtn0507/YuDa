@@ -13,7 +13,7 @@ import { DiaryModule } from './diary/diary.module';
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'prod' ? '.env' : '.env.dev'
+      envFilePath: process.env.NODE_ENV === 'production' ? '.env' : '.env.dev'
     }),
     TypeOrmModule.forRoot(typeORMConfig),
     DiaryModule,
