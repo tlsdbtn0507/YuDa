@@ -14,7 +14,7 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   entities: [__dirname + "/../**/*.entity.{js,ts}"],
   synchronize: !!process.env.POSTGRES_SYNCHRONIZE || dbConfig.synchronize,
   ssl: {
-    ca:fs.readFileSync('../../ap-northeast-2-bundle.pem')
+    ca:fs.readFileSync('back/ap-northeast-2-bundle.pem')
   },
   extra: {
     ssl: {
