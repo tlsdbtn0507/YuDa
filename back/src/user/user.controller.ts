@@ -20,6 +20,7 @@ export class UserController {
   @Post('/idcheck')
   checkIdDuple(@Body() idCheck: { id: string }) {
     const { id } = idCheck;
+    console.log(process.env.NODE_ENV)
     return this.userService.checkIdDuple(id);
   }
 
