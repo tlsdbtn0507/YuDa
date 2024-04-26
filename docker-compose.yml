@@ -21,6 +21,7 @@ services:
       - ./back:/app
 
     environment:
+      - NODE_ENV=production
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_USERNAME=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
