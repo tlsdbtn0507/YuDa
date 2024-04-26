@@ -1,13 +1,8 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as config from 'config';
-import * as fs from 'fs'
-import path from 'path';
+import { sslConfig } from './sslConfig';
 
 const dbConfig = config.get('db');
-
-const currentDirectory = __dirname;
-
-const pemFilePath = path.join(currentDirectory, '../../../ap-northeast-2-bundle.pem');
 
 export const typeORMConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -18,12 +13,7 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   database: process.env.POSTGRES_DATABASE || dbConfig.database,
   entities: [__dirname + "/../**/*.entity.{js,ts}"],
   synchronize: !!process.env.POSTGRES_SYNCHRONIZE || dbConfig.synchronize,
-  ssl: {
-    ca:fs.readFileSync(pemFilePath)
-  },
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
+  ... process.env.NODE_ENV === 'production' && sslConfig  
 }
+
+console.log(typeORMConfig)
