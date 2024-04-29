@@ -6,11 +6,17 @@ services:
       dockerfile: Dockerfile.dev
       context: ./front
 
+    env_file:
+      - front/.env.local
+
     volumes:
       - /app/node_modules
       - ./front:/app
     
     stdin_open: true
+
+    ports:
+      - "3000:3000"
 
   backend:
     build: 
@@ -24,16 +30,18 @@ services:
       - NODE_ENV=development
     env_file:
       - back/.env.dev
-    
-  nginx:
-    restart: always
-
-    build: 
-      dockerfile: Dockerfile
-      context: ./nginx
-
     ports:
-      - "3000:80"
+      - "3002:3002"
+    
+  # nginx:
+  #   restart: always
+
+  #   build: 
+  #     dockerfile: Dockerfile
+  #     context: ./nginx
+
+  #   ports:
+  #     - "3000:80"
   
   postgres:
     build: ./postgres
