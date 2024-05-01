@@ -41,6 +41,9 @@ jobs:
     - name: authorizate ACR
       run: az acr update -n frontTest --admin-enabled true
 
+    - name: login to ACR
+      run: az acr login --name frontTest
+
     - name: push the docker to ACR
       run: docker push fronttest.azurecr.io/yudafront 
     
