@@ -38,6 +38,9 @@ jobs:
     - name: tag ACR name
       run: docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront 
 
+    - name: authorizate ACR
+      run: az acr update -n frontTest --admin-enabled true
+
     - name: push the docker to ACR
       run: docker push fronttest.azurecr.io/yudafront 
     
