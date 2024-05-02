@@ -47,6 +47,8 @@ jobs:
     - name: push the docker to ACR
       run: docker push fronttest.azurecr.io/yudafront 
     
+    - name: run the docker in  ACR
+      run: docker run fronttest.azurecr.io/yudafront 
     # - name: push back docker
     #   run: docker push yusushin/docker-backend
     # - name: push nginx docker
