@@ -12,21 +12,21 @@ jobs:
     - name: Get Code 
       uses: actions/checkout@v3
 
-    # - name: Login DockerHub
-    #   run: echo "${{secrets.DOCKER_HUB_PASSWORD}}" | docker login -u "${{secrets.DOCKER_HUB_ID}}" --password-stdin 
+    - name: Login DockerHub
+      run: echo "${{secrets.DOCKER_HUB_PASSWORD}}" | docker login -u "${{secrets.DOCKER_HUB_ID}}" --password-stdin 
     
-    # - name: login azure
-    #   run: az login --user "${{secrets.AZURE_LOGIN_ID}}" --password "${{secrets.AZURE_LOGIN_PW}}"
+    - name: login azure
+      run: az login --user "${{secrets.AZURE_LOGIN_ID}}" --password "${{secrets.AZURE_LOGIN_PW}}"
 
 
-    # - name: before_install
-    #   run : docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
+    - name: before_install
+      run : docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
 
-    # - name: Docker Test
-    #   run : docker run -e CI=true yusushin/yuda npm test 
+    - name: Docker Test
+      run : docker run -e CI=true yusushin/yuda npm test 
 
-    # - name: build front docker
-    #   run: docker build -t yusushin/docker-frontend ./front
+    - name: build front docker
+      run: docker build -t yusushin/docker-frontend ./front
     # # - name: build back docker
     # #   run: docker build -t yusushin/docker-backend ./back
     # # - name: build nginx docker
@@ -35,17 +35,18 @@ jobs:
     # # - name: push front docker
     # #   run: docker push yusushin/docker-frontend
 
-    # - name: tag ACR name
-    #   run: docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront 
 
-    # - name: authorizate ACR
-    #   run: az acr update -n frontTest --admin-enabled true
+    - name: authorizate ACR
+      run: az acr update -n frontTest --admin-enabled true
 
-    # - name: login to ACR
-    #   run: az acr login --name frontTest
+    - name: login to ACR
+      run: az acr login --name frontTest
 
-    # - name: push the docker to ACR
-    #   run: docker push fronttest.azurecr.io/yudafront 
+    - name: tag ACR name
+      run: docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront 
+
+    - name: push the docker to ACR
+      run: docker push fronttest.azurecr.io/yudafront 
     
     # # - name: push back docker
     # #   run: docker push yusushin/docker-backend
