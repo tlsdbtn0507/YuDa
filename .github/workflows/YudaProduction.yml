@@ -37,10 +37,10 @@ jobs:
 
 
     - name: authorizate ACR
-      run: az acr update -n frontTest --admin-enabled true
+      run: az acr update -n fronttest --admin-enabled true
 
     - name: login to ACR
-      run: az acr login --name frontTest
+      run: az acr login --name fronttest
 
     - name: tag ACR name
       run: docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront 
