@@ -14,7 +14,7 @@ ENV WDS_SOCKET_HOST = 0.0.0.0 \
 
 COPY . .
 
-CMD [ "npm" , "run", "build" ]
+CMD [ "npm" , "run", "start" ]
 
 # FROM nginx
 
