@@ -1,5 +1,8 @@
 FROM node:alpine as builder
 
+ENV REACT_APP_SERVER api
+ENV WDS_SOCKET_PORT 0
+
 WORKDIR /app
 
 COPY ./package.json ./
@@ -7,7 +10,6 @@ COPY ./package-lock.json ./
 
 RUN npm install
 
-ENV REACT_APP_SERVER api
 
 COPY . .
 
