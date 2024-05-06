@@ -1,7 +1,7 @@
 FROM node:alpine as builder
 
 ENV REACT_APP_SERVER api
-ENV WDS_SOCKET_PORT 0
+ENV WDS_SOCKET_PORT 443
 
 WORKDIR /app
 
