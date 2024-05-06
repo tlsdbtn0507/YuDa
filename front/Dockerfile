@@ -7,10 +7,7 @@ COPY ./package-lock.json ./
 
 RUN npm install
 
-ENV REACT_APP_SERVER = api
-# WDS_SOCKET_HOST = 0.0.0.0 \
-#   WDS_SOCKET_PATH = /wss \
-#   WDS_SOCKET_PORT = 443 \
+ENV REACT_APP_SERVER api
 
 COPY . .
 
