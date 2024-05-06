@@ -12,6 +12,7 @@ const IdCheckBtn = (props: BtnType) => {
     props.onClick(e);
     setIsClicked(true);
     console.log(process.env.REACT_APP_SERVER)
+    console.log(process.env.WDS_SOCKET_PORT)
   };
   
   let btnContent = "아이디 중복 조회";
