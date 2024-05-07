@@ -8,7 +8,7 @@ export const sendSign = async ({request}:sendObj) =>{
   const formData = await request.formData();
 
   try {
-    const { data } = await API.post(`/api/user/signup`, toSendData(formData));
+    const { data } = await API.post(`/user/signup`, toSendData(formData));
     alert('회원 가입이 완료되었습니다.')
     return redirect(`/login`)
   } catch (error) {
@@ -19,13 +19,13 @@ export const sendSign = async ({request}:sendObj) =>{
 }
 
 export const checkIdDuple = async (idToCheckDuple:string):Promise<boolean> => {
-  const res = await API.post(`/api/user/idcheck`,{id:idToCheckDuple});
+  const res = await API.post(`/user/idcheck`,{id:idToCheckDuple});
   return res.data
 }
 
 export const login = async (request: { id: string, pw: string }) => {
   try {
-    const { data } = await API.post(`/api/user/login`, request);
+    const { data } = await API.post(`/user/login`, request);
     return data;
   } catch (error) {
     console.log(error)
@@ -34,7 +34,7 @@ export const login = async (request: { id: string, pw: string }) => {
 
 export const renewToken = async (refreshToken: string) : Promise<boolean> => {
   try {
-    const { data } = await API.post('/api/user/renew', { refreshToken });
+    const { data } = await API.post('/user/renew', { refreshToken });
     return data
   } catch (error) {
     throw new Error()
@@ -43,7 +43,7 @@ export const renewToken = async (refreshToken: string) : Promise<boolean> => {
 
 export const logoutPost =async (refreshToken:string) => {
   try {
-    const { data } = await API.post('/api/user/logout', { refreshToken });
+    const { data } = await API.post('/user/logout', { refreshToken });
     return data;
   } catch (error) {
     
