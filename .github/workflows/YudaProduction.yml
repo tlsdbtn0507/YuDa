@@ -27,8 +27,9 @@ jobs:
 
     - name: build front docker
       run: docker build -t yusushin/docker-frontend ./front
-    # # - name: build back docker
-    # #   run: docker build -t yusushin/docker-backend ./back
+
+    # - name: build back docker
+    #   run: docker build -t yusushin/docker-backend ./back
     # # - name: build nginx docker
     # #   run: docker build -t yusushin/docker-nginx ./nginx
       
