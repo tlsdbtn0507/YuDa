@@ -5,8 +5,9 @@ FROM node:alpine as builder
 
 WORKDIR /app
 
+COPY .env .
+
 COPY ./package.json ./
-COPY ./env .
 COPY ./package-lock.json ./
 
 RUN npm install
