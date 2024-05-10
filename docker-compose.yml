@@ -2,10 +2,15 @@ version: '3'
 
 services:
   frontend:
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: ./front
     image: yusushin/docker-frontend
 
-    environment:
-      - REACT_APP_SERVER=${REACT_APP_SERVER}
+    env_file:
+      - front/.env
+    # environment:
+    #   - REACT_APP_SERVER=${REACT_APP_SERVER}
 
     volumes:
       - /app/node_modules
@@ -14,6 +19,9 @@ services:
     stdin_open: true
 
   backend:
+    # build: 
+    #   dockerfile: Dockerfile
+    #   context: ./back
     image: yusushin/docker-backend
     container_name: app_back
     volumes:
@@ -22,17 +30,23 @@ services:
 
     environment:
       - NODE_ENV=production
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - POSTGRES_HOSTPORT=${POSTGRES_HOSTPORT}
-      
-  nginx:
-    restart: always
-
-    image: yusushin/docker-nginx
-
+    env_file:
+      - back/.env
     ports:
-      - "80:80"
+      - "3002:3002"
+    # environment:
+    #   - NODE_ENV=production
+    #   - POSTGRES_HOST=${POSTGRES_HOST}
+    #   - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+    #   - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    #   - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+    #   - POSTGRES_PORT=${POSTGRES_PORT}
+    #   - POSTGRES_HOSTPORT=${POSTGRES_HOSTPORT}
+      
+  # nginx:
+  #   restart: always
+
+  #   image: yusushin/docker-nginx
+
+  #   ports:
+  #     - "80:80"

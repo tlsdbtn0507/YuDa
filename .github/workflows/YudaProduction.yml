@@ -28,8 +28,8 @@ jobs:
     - name: build front docker
       run: docker build -t yusushin/docker-frontend ./front
 
-    # - name: build back docker
-    #   run: docker build -t yusushin/docker-backend ./back
+    - name: build back docker
+      run: docker build -t yusushin/docker-backend ./back
     # # - name: build nginx docker
     # #   run: docker build -t yusushin/docker-nginx ./nginx
       
@@ -43,11 +43,20 @@ jobs:
     - name: login to ACR
       run: az acr login --name fronttest
 
-    - name: tag ACR name
+    - name: tag ACR front name
       run: docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront 
 
-    - name: push the docker to ACR
+    - name: tag ACR back name
+      run: docker tag yusushin/docker-backend fronttest.azurecr.io/yudaback 
+
+    - name: push the front docker to ACR
       run: docker push fronttest.azurecr.io/yudafront 
+
+    - name: push the back docker to ACR
+      run: docker push fronttest.azurecr.io/yudaback 
+
+    - name: run compose file
+      run : az container create -g fronttest -f docker-compose.yml
 
     # - name: run the docker in ACR
     #   run: docker run fronttest.azurecr.io/yudafront 
