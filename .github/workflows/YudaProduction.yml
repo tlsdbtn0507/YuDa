@@ -56,7 +56,7 @@ jobs:
       run: docker push fronttest.azurecr.io/yudaback 
 
     - name: run compose file
-      run : az container create -g fronttest -f docker-compose.yml
+      run : az container create --resource-group fronttest --file docker-compose.yml
 
     # - name: run the docker in ACR
     #   run: docker run fronttest.azurecr.io/yudafront 
