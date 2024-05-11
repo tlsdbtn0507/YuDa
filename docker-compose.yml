@@ -5,7 +5,7 @@ services:
     # build:
     #   dockerfile: Dockerfile
     #   context: ./front
-    image: yusushin/docker-frontend
+    image: fronttest.azurecr.io/yudafront
 
     env_file:
       - front/.env
@@ -22,7 +22,7 @@ services:
     # build: 
     #   dockerfile: Dockerfile
     #   context: ./back
-    image: yusushin/docker-backend
+    image: fronttest.azurecr.io/yudaback
     container_name: app_back
     volumes:
       - /app/node_modules
