@@ -46,4 +46,4 @@ jobs:
 
     - name: run compose file
       # run : az acr run --registry fronttest --file docker-compose.yml .
-      run : az webapp create --resource-group fronttest --plan Yuda --name Yuda --multicontainer-config-type compose --multicontainer-config-file docker-compose.yml
+      run : az webapp create --resource-group fronttest --plan Yuda --name YusuDairy --multicontainer-config-type compose --multicontainer-config-file docker-compose.yml
