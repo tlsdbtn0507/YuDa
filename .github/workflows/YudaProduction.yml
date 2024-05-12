@@ -36,14 +36,26 @@ jobs:
 
     - name: tag ACR name
       run: | 
-        docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront 
-        docker tag yusushin/docker-backend fronttest.azurecr.io/yudaback 
+        docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront:${{ github.sha }} 
+        docker tag yusushin/docker-backend fronttest.azurecr.io/yudaback:${{ github.sha }} 
 
     - name: push the dockers to ACR
       run: | 
-        docker push fronttest.azurecr.io/yudafront
-        docker push fronttest.azurecr.io/yudaback  
+        docker push fronttest.azurecr.io/yudafront:${{ github.sha }}
+        docker push fronttest.azurecr.io/yudaback:${{ github.sha }}  
+      
+    - name: Deploy to Azure front Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+      with:
+        app-name: yudafronttest
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        images: 'fronttest.azurecr.io/yudafront:${{ github.sha }}'
 
-    # - name: run compose file
-    #   # run : az acr run --registry fronttest --file docker-compose.yml .
-    #   run : az webapp create --resource-group fronttest --plan Yuda --name YusuDairy --multicontainer-config-type compose --multicontainer-config-file docker-compose.yml
+    - name: Deploy to Azure back Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+      with:
+        app-name: yudabacktest
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACK }}
+        images: 'fronttest.azurecr.io/yudaback:${{ github.sha }}'
