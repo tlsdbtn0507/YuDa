@@ -18,71 +18,31 @@ jobs:
     - name: login azure
       run: az login --user "${{secrets.AZURE_LOGIN_ID}}" --password "${{secrets.AZURE_LOGIN_PW}}"
 
-
     - name: before_install
       run : docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
 
     - name: Docker Test
       run : docker run -e CI=true yusushin/yuda npm test 
 
-    - name: build front docker
-      run: docker build -t yusushin/docker-frontend ./front
+    - name: build dockers
+      run: |
+        docker build -t yusushin/docker-frontend ./front
+        docker build -t yusushin/docker-backend ./back
 
-    - name: build back docker
-      run: docker build -t yusushin/docker-backend ./back
-    # # - name: build nginx docker
-    # #   run: docker build -t yusushin/docker-nginx ./nginx
-      
-    # # - name: push front docker
-    # #   run: docker push yusushin/docker-frontend
+    - name: authorizate ACR and login to ACR
+      run: | 
+        az acr update -n fronttest --admin-enabled true
+        az acr login --name fronttest
 
-
-    - name: authorizate ACR
-      run: az acr update -n fronttest --admin-enabled true
-
-    - name: login to ACR
-      run: az acr login --name fronttest
-
-    # - name: tag ACR front name
     - name: tag ACR name
       run: | 
         docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront 
         docker tag yusushin/docker-backend fronttest.azurecr.io/yudaback 
-
-    # - name: tag ACR back name
-    #   run: docker tag yusushin/docker-backend fronttest.azurecr.io/yudaback 
 
     - name: push the dockers to ACR
       run: | 
         docker push fronttest.azurecr.io/yudafront
         docker push fronttest.azurecr.io/yudaback  
 
-    # - name: push the back docker to ACR
-    #   run: docker push fronttest.azurecr.io/yudaback 
-
     - name: run compose file
       run : az acr run --registry fronttest --file docker-compose.yml .
-
-    # - name: run the docker in ACR
-    #   run: docker run fronttest.azurecr.io/yudafront 
-    
-    # # - name: push back docker
-    # #   run: docker push yusushin/docker-backend
-    # # - name: push nginx docker
-    # #   run: docker push yusushin/docker-nginx
-    
-    # # - name: Generate deployment package
-    # #   run: zip -r deploy.zip . -x '*.git*'
-
-    # # - name: Deploy to EB
-    # #   uses: einaregilsson/beanstalk-deploy@v21
-    # #   with:
-    # #     aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-    # #     aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    # #     application_name: Yuda
-    # #     environment_name: Yuda-env
-    # #     version_label: ${{ github.sha }}
-    # #     region: ap-northeast-2
-    # #     use_existing_version_if_available: true
-    # #     deployment_package: deploy.zip
-    # #     existing_bucket_name: elasticbeanstalk-ap-northeast-2-975050092500
