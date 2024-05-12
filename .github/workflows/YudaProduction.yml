@@ -45,7 +45,7 @@ jobs:
         docker push fronttest.azurecr.io/yudaback:${{ github.sha }}  
       
     - name: Deploy to Azure front Web App
-      id: deploy-to-webapp
+      id: deploy-front-to-webapp
       uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
       with:
         app-name: yudafronttest
@@ -53,7 +53,7 @@ jobs:
         images: 'fronttest.azurecr.io/yudafront:${{ github.sha }}'
 
     - name: Deploy to Azure back Web App
-      id: deploy-to-webapp
+      id: deploy-back-to-webapp
       uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
       with:
         app-name: yudabacktest
