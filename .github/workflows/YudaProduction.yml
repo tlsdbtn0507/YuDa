@@ -46,7 +46,7 @@ jobs:
       
     - name: Deploy to Azure front Web App
       id: deploy-front-to-webapp
-      uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+      uses: azure/webapps-deploy@v2
       with:
         app-name: yudafronttest
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
@@ -54,7 +54,7 @@ jobs:
 
     - name: Deploy to Azure back Web App
       id: deploy-back-to-webapp
-      uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+      uses: azure/webapps-deploy@v2
       with:
         app-name: yudabacktest
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACK }}
