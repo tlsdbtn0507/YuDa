@@ -5,3 +5,7 @@ db:
   type: 'postgres'
   port: 5432
   database: 'back'
+
+jwt: 
+  secretKey: 'superZangkey1!'
+  expireTime: 600000
