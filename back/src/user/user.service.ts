@@ -6,6 +6,9 @@ import { SignUserDto } from './dto/signUserDto';
 import * as bcrypt from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
+import * as config from 'config'
+
+const jwtConfig = config.get('jwt');
 
 @Injectable()
 export class UserService {
@@ -44,7 +47,7 @@ export class UserService {
     if (getUser && (await bcrypt.compare(pw, getUser.pw))) {
       const payload = { id,name:getUser.name };
       const refreshToken = this.jwtService.sign({
-       id, expiresIn: process.env.JWT_EXPIRES_ACCESS
+       id, expiresIn: process.env.JWT_EXPIRES_ACCESS || jwtConfig.expireTime
       });
       const accessToken = this.jwtService.sign(payload);
 

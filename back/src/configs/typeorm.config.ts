@@ -1,6 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as config from 'config';
-// import { sslConfig } from './sslConfig';
 
 const dbConfig = config.get('db');
 

@@ -7,7 +7,7 @@ import { UserEntity } from "src/user/user.entity";
 import { Request } from "express";
 import { Repository } from "typeorm";
 
-require('dotenv').config()
+const jwtConfig = config.get('jwt');
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
   ) {
     super(
       {
-        secretOrKey: process.env.JWT_SECRET_KEY || config.get('JWT_SECRET_KEY'),
+        secretOrKey: process.env.JWT_SECRET_KEY || jwtConfig.secretKey,
         ignoreExpiration:false,
         jwtFromRequest: ExtractJwt.fromExtractors([(req:Request) => req.cookies['Auth']])
       })
