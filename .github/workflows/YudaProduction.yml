@@ -36,8 +36,8 @@ jobs:
 
     - name: clean ACR repository 
       run: |
-        az acr repository delete -n fronttest --repository yudafront --yes y
-        az acr repository delete -n fronttest --repository yudaback --yes y
+        az acr repository delete -n fronttest --repository yudafront --yes
+        az acr repository delete -n fronttest --repository yudaback --yes
 
     - name: tag ACR name
       run: | 
