@@ -27,7 +27,17 @@ jobs:
     - name: build dockers
       run: |
         docker build -t yusushin/docker-frontend ./front
-        docker build -t yusushin/docker-backend ./back
+        docker build \
+          --build-arg POSTGRES_HOSTPORT="${{ secrets.POSTGRES_HOSTPORT }}" \
+          --build-arg POSTGRES_HOST="${{ secrets.POSTGRES_HOST }}" \
+          --build-arg POSTGRES_PORT="${{ secrets.POSTGRES_PORT }}" \
+          --build-arg POSTGRES_USERNAME="${{ secrets.POSTGRES_USERNAME }}" \
+          --build-arg POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
+          --build-arg POSTGRES_DATABASE="${{ secrets.POSTGRES_DATABASE }}" \
+          --build-arg POSTGRES_SYNCHRONIZE="${{ secrets.POSTGRES_SYNCHRONIZE }}" \
+          --build-arg JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
+          --build-arg JWT_EXPIRES_ACCESS="${{ secrets.JWT_EXPIRES_ACCESS }}" \
+          -t yusushin/docker-backend ./back
 
     - name: authorizate ACR and login to ACR
       run: | 
