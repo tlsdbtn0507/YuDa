@@ -27,7 +27,7 @@ jobs:
     - name: build dockers
       run: |
         docker build -t yusushin/docker-frontend ./front
-        docker build \
+        docker build --platform=linux/amd64 \
           --build-arg POSTGRES_HOSTPORT="${{ secrets.POSTGRES_HOSTPORT }}" \
           --build-arg POSTGRES_HOST="${{ secrets.POSTGRES_HOST }}" \
           --build-arg POSTGRES_PORT="${{ secrets.POSTGRES_PORT }}" \
@@ -59,13 +59,13 @@ jobs:
         docker push fronttest.azurecr.io/yudafront:${{ github.sha }}
         docker push fronttest.azurecr.io/yudaback:${{ github.sha }}  
       
-    - name: Deploy to Azure front Web App
-      id: deploy-front-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: yudafronttest
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: 'fronttest.azurecr.io/yudafront:${{ github.sha }}'
+    # - name: Deploy to Azure front Web App
+    #   id: deploy-front-to-webapp
+    #   uses: azure/webapps-deploy@v2
+    #   with:
+    #     app-name: yudafronttest
+    #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+    #     images: 'fronttest.azurecr.io/yudafront:${{ github.sha }}'
 
     - name: Deploy to Azure back Web App
       id: deploy-back-to-webapp
