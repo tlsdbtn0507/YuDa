@@ -67,10 +67,10 @@ jobs:
     #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
     #     images: 'fronttest.azurecr.io/yudafront:${{ github.sha }}'
 
-    - name: Deploy to Azure back Web App
-      id: deploy-back-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: yudabacktest
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACK }}
-        images: 'fronttest.azurecr.io/yudaback:${{ github.sha }}'
+    # - name: Deploy to Azure back Web App
+    #   id: deploy-back-to-webapp
+    #   uses: azure/webapps-deploy@v2
+    #   with:
+    #     app-name: yudabacktest
+    #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACK }}
+    #     images: 'fronttest.azurecr.io/yudaback:${{ github.sha }}'
