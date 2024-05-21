@@ -1,5 +1,0 @@
-db: 
-  host: 'localhost1'
-  username: 'postgres1'
-  password: 'postgres1'
-  synchronize: true
