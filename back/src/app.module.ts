@@ -9,14 +9,14 @@ import { DiaryModule } from './diary/diary.module';
 
 @Module({
   imports: [
-    // UserModule,
+    UserModule,
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'production' ? '.env' : '.env.dev'
     }),
-    // TypeOrmModule.forRoot(typeORMConfig),
-    // DiaryModule,
+    TypeOrmModule.forRoot(typeORMConfig),
+    DiaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

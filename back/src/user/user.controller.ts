@@ -6,9 +6,6 @@ import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/configs/get-user.decorator';
 import { UserEntity } from './user.entity';
-import * as config from 'config'
-
-const jwtConfig = config.get('jwt')
 
 @Controller('/api/user')
 export class UserController {
@@ -35,7 +32,7 @@ export class UserController {
     const { accessToken } = await this.userService.login(signUserDto);
 
     res.cookie('Auth', accessToken, {
-      maxAge:+process.env.JWT_EXPIRES_ACCESS || jwtConfig.expireTime,
+      maxAge:+process.env.JWT_EXPIRES_ACCESS,
       httpOnly:true
     })
     
@@ -54,7 +51,7 @@ export class UserController {
     const condition = result !== false
 
     condition && res.cookie('Auth', result.accessToken, {
-      maxAge: +process.env.JWT_EXPIRES_ACCESS || jwtConfig.expireTime,
+      maxAge: +process.env.JWT_EXPIRES_ACCESS,
       httpOnly: true
     });
 
