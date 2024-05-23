@@ -29,6 +29,7 @@ jobs:
         docker build --platform=linux/amd64 \
           --build-arg WDS_SOCKET_PORT="${{ secrets.WDS_SOCKET_PORT }}" \
           --build-arg REACT_APP_SERVER="${{ secrets.REACT_APP_SERVER }}" \
+          --build-arg REACT_APP_DELAY="${{ secrets.REACT_APP_DELAY }}" \
           -t yusushin/docker-frontend ./front
         docker build --platform=linux/amd64 \
           --build-arg POSTGRES_HOSTPORT="${{ secrets.POSTGRES_HOSTPORT }}" \
