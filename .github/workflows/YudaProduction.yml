@@ -26,7 +26,10 @@ jobs:
 
     - name: build dockers
       run: |
-        docker build -t yusushin/docker-frontend ./front
+        docker build \
+          --build-arg WDS_SOCKET_PORT="${{ secrets.WDS_SOCKET_PORT }}" \
+          --build-arg REACT_APP_SERVER="${{ secrets.REACT_APP_SERVER }}" \
+          -t yusushin/docker-frontend ./front
         docker build --platform=linux/amd64 \
           --build-arg POSTGRES_HOSTPORT="${{ secrets.POSTGRES_HOSTPORT }}" \
           --build-arg POSTGRES_HOST="${{ secrets.POSTGRES_HOST }}" \
