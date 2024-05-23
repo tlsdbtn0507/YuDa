@@ -27,6 +27,8 @@ jobs:
     - name: build dockers
       run: |
         docker build --platform=linux/amd64 \
+          --build-arg WDS_SOCKET_HOST="${{ secrets.WDS_SOCKET_HOST }}" \
+          --build-arg WDS_SOCKET_PATH="${{ secrets.WDS_SOCKET_PATH }}" \
           --build-arg WDS_SOCKET_PORT="${{ secrets.WDS_SOCKET_PORT }}" \
           --build-arg REACT_APP_SERVER="${{ secrets.REACT_APP_SERVER }}" \
           --build-arg REACT_APP_DELAY="${{ secrets.REACT_APP_DELAY }}" \
