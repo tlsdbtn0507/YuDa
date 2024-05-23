@@ -25,10 +25,10 @@ input{
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .pwInput{
-  width: 20vh;
+  width: 21vh;
 }
 .pwInputVal{
   border: 1px solid red;
