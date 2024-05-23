@@ -7,7 +7,7 @@ services:
       context: ./front
 
     env_file:
-      - front/.env.local
+      - front/.env
 
     volumes:
       - /app/node_modules
@@ -29,31 +29,21 @@ services:
     environment:
       - NODE_ENV=development
     env_file:
-      - back/.env.dev
+      - back/.env
     ports:
       - "3002:3002"
     
-  # nginx:
-  #   restart: always
-
-  #   build: 
-  #     dockerfile: Dockerfile
-  #     context: ./nginx
-
+  # postgres:
+  #   build: ./postgres
+  #   restart: unless-stopped
+  #   container_name: app_postgres
   #   ports:
-  #     - "3000:80"
-  
-  postgres:
-    build: ./postgres
-    restart: unless-stopped
-    container_name: app_postgres
-    ports:
-      - "5432:5432"
+  #     - "5432:5432"
     
-    volumes:
-      - ./postgres/postgres_data:/var/lib/postgres
-      - ./postgres/sqls/:/docker-entrypoint-initdb.d/
+  #   volumes:
+  #     - ./postgres/postgres_data:/var/lib/postgres
+  #     - ./postgres/sqls/:/docker-entrypoint-initdb.d/
 
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DATABASE=back
+  #   environment:
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DATABASE=back
