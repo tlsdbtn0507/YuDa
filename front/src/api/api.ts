@@ -1,10 +1,11 @@
 import axios from "axios"
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_SERVER
+  baseURL: process.env.REACT_APP_SERVER,
+  withCredentials: true,
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-CSRF-TOKEN',
 })
-
-API.defaults.withCredentials = true
 
 export default API
 

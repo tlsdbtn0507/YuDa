@@ -20,7 +20,7 @@ export class CsrfMiddleware implements NestMiddleware{
         }
         // CSRF 토큰을 클라이언트에 전송
         res.cookie('XSRF-TOKEN', req.csrfToken(),
-          { httpOnly: true, sameSite: 'none', secure: true });
+          { httpOnly: false, sameSite: 'none', secure: true });
         next();
       });
     });
