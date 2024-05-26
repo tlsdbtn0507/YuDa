@@ -32,7 +32,8 @@ export class UserController {
 
     res.cookie('Auth', accessToken, {
       maxAge:+process.env.JWT_EXPIRES_ACCESS,
-      httpOnly:true
+      httpOnly: true,
+      sameSite:'none'
     })
 
     return this.userService.login(signUserDto);
@@ -51,7 +52,8 @@ export class UserController {
 
     condition && res.cookie('Auth', result.accessToken, {
       maxAge: +process.env.JWT_EXPIRES_ACCESS,
-      httpOnly: true
+      httpOnly: true,
+      sameSite:'none'
     });
 
     return condition ? true : result;

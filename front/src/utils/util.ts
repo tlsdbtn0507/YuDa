@@ -27,8 +27,3 @@ export const tokenSet = (token: string) => {
     res && tokenSet(refreshToken);
   }, +timer);
 }
-
-export const getCsrfToken = () => {
-  const csrfToken = document.cookie.split('; ').find(row => row.startsWith('XSRF-TOKEN='));
-  return csrfToken ? csrfToken.split('=')[1] : '';
-};
