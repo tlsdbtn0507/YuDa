@@ -34,7 +34,7 @@ export class UserController {
       maxAge:+process.env.JWT_EXPIRES_ACCESS,
       httpOnly:true
     })
-    
+
     return this.userService.login(signUserDto);
   }
 
