@@ -12,6 +12,14 @@ jobs:
     - name: Get Code 
       uses: actions/checkout@v3
 
+    - name: Cache node modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+          
     - name: Login DockerHub
       run: echo "${{secrets.DOCKER_HUB_PASSWORD}}" | docker login -u "${{secrets.DOCKER_HUB_ID}}" --password-stdin 
     
