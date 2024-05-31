@@ -49,16 +49,14 @@ export class UserController {
   ) {
     const result = await this.userService.renewToken(token, user);
 
-    const condition = result !== false
-
-    condition && res.cookie('Auth', result.accessToken, {
+    res.cookie('Auth', result.accessToken, {
       maxAge: +process.env.JWT_EXPIRES_ACCESS,
       httpOnly: true,
       sameSite:'none',
       secure: true
     });
 
-    return condition ? true : result;
+    return result;
   }
 
   @Post('/logout')

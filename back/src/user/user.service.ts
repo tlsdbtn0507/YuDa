@@ -42,7 +42,8 @@ export class UserService {
     const getUser = await this.userService.findOne({ where: { userId:id } });
 
     if (getUser && (await bcrypt.compare(pw, getUser.pw))) {
-      const payload = { id,name:getUser.name };
+      const payload = { id, name: getUser.name };
+      
       const refreshToken = this.jwtService.sign({
        id, expiresIn: process.env.JWT_EXPIRES_ACCESS
       });
@@ -59,13 +60,15 @@ export class UserService {
   async renewToken(token: { refreshToken: string }, user:UserEntity) {
     const { refreshToken } = token;
     const checkToken = await this.userService.findOne({ where: { refreshToken } });
-    const condition = checkToken.id === user.id;
+    
+    if (checkToken.id !== user.id) throw new UnauthorizedException('로그인 유지 불가');
 
     const accessToken = this.jwtService.sign({
       id: checkToken.userId,
       name: checkToken.name
     });
-    return condition ? {accessToken} : false;
+
+    return { accessToken };
   };
 
   async logout(token:{refreshToken:string}, user:UserEntity) {
