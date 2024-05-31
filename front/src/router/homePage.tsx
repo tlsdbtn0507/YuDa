@@ -20,7 +20,7 @@ const HomePage = () => {
     queryFn: getDiaries,
   });
 
-  const { getDiaries: fetchingDiary } = diaryStore(state => state);
+  const { storeDiary } = diaryStore(state => state);
 
   const token = localStorage.getItem('refreshToken') as string;
 
@@ -31,7 +31,7 @@ const HomePage = () => {
       window.location.reload();
     }
 
-    if (data) fetchingDiary(data);
+    if (data) storeDiary(data);
 
     tokenSet(token);
 
