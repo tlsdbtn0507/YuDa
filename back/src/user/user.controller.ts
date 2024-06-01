@@ -41,7 +41,6 @@ export class UserController {
   }
 
   @Post('/renew')
-  @UseGuards(AuthGuard())
   async renewToken(
     @GetUser() user: UserEntity,
     @Res({ passthrough: true }) res: Response,
