@@ -8,12 +8,8 @@ import { useQuery } from '@tanstack/react-query'
 import { getDiaries } from '../api/diary/diaryApi'
 import { diaryStore } from '../store/diary/diaryStore'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { tokenSet } from '../utils/util'
 
 const HomePage = () => {
-
-  const navigate = useNavigate();
 
   const { data, isError } = useQuery({
     queryKey: ['diaries'],
@@ -22,19 +18,8 @@ const HomePage = () => {
 
   const { storeDiary } = diaryStore(state => state);
 
-  const token = localStorage.getItem('refreshToken') as string;
-
   useEffect(() => {
-    if (isError) {
-      alert('로그인 후 사용해 주세요!');
-      navigate('/login');
-      window.location.reload();
-    }
-
     if (data) storeDiary(data);
-
-    tokenSet(token);
-
   }, [isError, data]);
   
   return (
