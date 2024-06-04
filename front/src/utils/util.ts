@@ -9,21 +9,22 @@ export const toSendData = (data: FormData) => {
   return toReturn
 }
 
-export const tokenSet = (token: string) => {
-  localStorage.setItem('refreshToken', token);
+export const checkRefreshTokenIsExpire = (iat: number | undefined) => {
+  // const DELAY_TIME = process.env.REACT_APP_DELAY as string;
+  const DELAY_TIME = 54000;
+  const refreshedTime = iat as number * 1000;
 
-  const refreshToken = localStorage.getItem('refreshToken') as string;
+  const refreshTime = refreshedTime + Number(DELAY_TIME);
+  const now = Date.now();
 
-  const timer = process.env.REACT_APP_DELAY as string;
+  const delay = refreshTime - now;
 
-  const refCondition = localStorage.getItem('nonRef');
+  const recuirse = () => {
+    renewToken(localStorage.getItem('refreshToken') as string);
+    setTimeout(() => recuirse(), DELAY_TIME);
+  }
 
-  if (refCondition === 'nonRef') {
-    renewToken(refreshToken)
-      .then(() => setTimeout(() => tokenSet(refreshToken), +timer));
-    return 
-  } else setTimeout( async() => {
-    const res = await renewToken(token);
-    res && tokenSet(refreshToken);
-  }, +timer);
+  if (delay > 0) setTimeout(() => recuirse(), delay);
+  else recuirse();
+  
 }

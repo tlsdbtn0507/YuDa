@@ -7,9 +7,13 @@ import css from '../css/main.module.css'
 import { useQuery } from '@tanstack/react-query'
 import { getDiaries } from '../api/diary/diaryApi'
 import { diaryStore } from '../store/diary/diaryStore'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
+import { checkRefreshTokenIsExpire } from 'utils/util'
 
 const HomePage = () => {
+
+  const refreshToken = localStorage.getItem('refreshToken') as string;
 
   const { data, isError } = useQuery({
     queryKey: ['diaries'],
@@ -20,7 +24,11 @@ const HomePage = () => {
 
   useEffect(() => {
     if (data) storeDiary(data);
-  }, [isError, data]);
+
+    const { iat } = jwtDecode(refreshToken); 
+
+    checkRefreshTokenIsExpire(iat);
+  }, [isError, data,diaryStore]);
   
   return (
     <>
