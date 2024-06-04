@@ -2,7 +2,6 @@ import { DiaryType } from "../../model/types";
 import API from "../api"
 
 export const getDiaries = async () => {
-
   try {
     const { data } = await API.get('/diary');
     return data;
