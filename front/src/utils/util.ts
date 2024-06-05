@@ -1,6 +1,9 @@
 import { renewToken } from "../api/users/usersApi";
 import { toSendDataObj } from "../model/types";
 
+let timeoutId:null | ReturnType<typeof setTimeout> = null 
+
+
 export const toSendData = (data: FormData) => {
   const toReturn: toSendDataObj = {};
   data.forEach((e, i) => {
@@ -10,8 +13,8 @@ export const toSendData = (data: FormData) => {
 }
 
 export const checkRefreshTokenIsExpire = (iat: number | undefined) => {
-  // const DELAY_TIME = process.env.REACT_APP_DELAY as string;
-  const DELAY_TIME = 54000;
+  const DELAY_TIME = process.env.REACT_APP_DELAY as string;
+
   const refreshedTime = iat as number * 1000;
 
   const refreshTime = refreshedTime + Number(DELAY_TIME);
@@ -19,12 +22,19 @@ export const checkRefreshTokenIsExpire = (iat: number | undefined) => {
 
   const delay = refreshTime - now;
 
-  const recuirse = () => {
-    renewToken(localStorage.getItem('refreshToken') as string);
-    setTimeout(() => recuirse(), DELAY_TIME);
-  }
+  const recuirse = async () => {
 
-  if (delay > 0) setTimeout(() => recuirse(), delay);
+    const result = await renewToken(localStorage.getItem('refreshToken') as string);
+
+    if (!result) return;
+
+    timeoutId = setTimeout(() => recuirse(), +DELAY_TIME);
+  };
+
+  if (delay > 0) {
+    timeoutId = setTimeout(() => recuirse(), delay);
+  }
   else recuirse();
   
+  return timeoutId;
 }
