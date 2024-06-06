@@ -7,7 +7,7 @@ import css from '../css/main.module.css'
 import { useQuery } from '@tanstack/react-query'
 import { getDiaries } from '../api/diary/diaryApi'
 import { diaryStore } from '../store/diary/diaryStore'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { jwtDecode } from 'jwt-decode'
 import { checkRefreshTokenIsExpire } from 'utils/util'
 
@@ -27,8 +27,12 @@ const HomePage = () => {
 
     const { iat } = jwtDecode(refreshToken); 
 
-    checkRefreshTokenIsExpire(iat);
-  }, [isError, data,diaryStore]);
+    let clearTimeId = checkRefreshTokenIsExpire(iat);
+
+    return () => {
+      clearTimeout(clearTimeId as ReturnType<typeof setTimeout>)
+    }
+  }, [isError, data]);
   
   return (
     <>
