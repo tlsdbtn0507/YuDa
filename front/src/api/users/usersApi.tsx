@@ -32,11 +32,13 @@ export const login = async (request: { id: string, pw: string }) => {
   }
 }
 
-export const renewToken = async (refreshToken: string) : Promise<boolean> => {
+export const renewToken = async (refreshToken: string): Promise<boolean> => {
+  const token = localStorage.getItem('refreshToken') as string;
   try {
     const { data } = await API.post('/user/renew', { refreshToken });
     return data
   } catch (error) {
+    if (!token) return false;
     throw new Error()
   }
 };
