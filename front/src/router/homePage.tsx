@@ -42,8 +42,8 @@ const HomePage = () => {
           <LastToday/>
           <MyDiaries/>
         </div>
+        <Nav/>
       </div>
-      <Nav/>
     </>
   )
 }

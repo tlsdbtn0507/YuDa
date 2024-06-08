@@ -1,8 +1,8 @@
 .total{
   background-color: white;
   border-radius: 20px;
-  width: 21rem;
-  height: 73vh;
+  width: 80vw;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   font-family: JetBrains Mono;
