@@ -27,7 +27,7 @@ jobs:
       run: az login --user "${{secrets.AZURE_LOGIN_ID}}" --password "${{secrets.AZURE_LOGIN_PW}}"
 
     - name: front deploy static
-      steps:
+      run:
       - uses: actions/checkout@v3
         with:
           submodules: true
@@ -57,7 +57,7 @@ jobs:
             with:
               azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_PEBBLE_07F4BF900 }}
               action: "close"
-    
+
     # - name: before_install
     #   run : docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
 
