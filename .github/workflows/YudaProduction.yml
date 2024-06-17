@@ -2,69 +2,25 @@ name: YuDa CI CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get Code 
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Cache node modules
-      uses: actions/cache@v2
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-          
-    - name: Login DockerHub
-      run: echo "${{secrets.DOCKER_HUB_PASSWORD}}" | docker login -u "${{secrets.DOCKER_HUB_ID}}" --password-stdin 
-    
-    - name: login azure
-      run: az login --user "${{secrets.AZURE_LOGIN_ID}}" --password "${{secrets.AZURE_LOGIN_PW}}"
+        version: 'latest'
+        service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        project_id: ardent-medley-426706-t0
 
-    - name: front deploy static
-      uses: Azure/static-web-apps-deploy@v1
-      with:
-        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_PEBBLE_07F4BF900 }}
-        repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-        action: "upload"
-        ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-        # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-        app_location: "./front" # App source code path
-        api_location: "" # Api source code path - optional
-        output_location: "build" # Built app content directory - optional
-        ###### End of Repository/Build Configurations ######
-
-      # close_pull_request_job:
-      #   if: github.event_name == 'pull_request' && github.event.action == 'closed'
-      #   runs-on: ubuntu-latest
-      #   name: Close Pull Request Job
-      #   steps:
-      #     - name: Close Pull Request
-      #       id: closepullrequest
-      #       uses: Azure/static-web-apps-deploy@v1
-      #       with:
-      #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_PEBBLE_07F4BF900 }}
-      #         action: "close"
-
-    # - name: before_install
-    #   run : docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
-
-    # - name: Docker Test
-    #   run : docker run -e CI=true yusushin/yuda npm test 
-
-    - name: build dockers
-        # docker build --platform=linux/amd64 \
-        #   --build-arg WDS_SOCKET_HOST="${{ secrets.WDS_SOCKET_HOST }}" \
-        #   --build-arg WDS_SOCKET_PATH="${{ secrets.WDS_SOCKET_PATH }}" \
-        #   --build-arg WDS_SOCKET_PORT="${{ secrets.WDS_SOCKET_PORT }}" \
-        #   --build-arg REACT_APP_SERVER="${{ secrets.REACT_APP_SERVER }}" \
-        #   --build-arg REACT_APP_DELAY="${{ secrets.REACT_APP_DELAY }}" \
-        #   -t yusushin/docker-frontend ./front
+    - name: Build Docker image
       run: |
         docker build --platform=linux/amd64 \
           --build-arg POSTGRES_HOSTPORT="${{ secrets.POSTGRES_HOSTPORT }}" \
@@ -77,39 +33,104 @@ jobs:
           --build-arg JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
           --build-arg JWT_EXPIRES_ACCESS="${{ secrets.JWT_EXPIRES_ACCESS }}" \
           -t yusushin/docker-backend ./back
+        docker tag yusushin/docker-backend gcr.io/ardent-medley-426706-t0/yuda-back
 
-    - name: authorizate ACR and login to ACR
-      run: | 
-        az acr update -n fronttest --admin-enabled true
-        az acr login --name fronttest
+    - name: Push Docker image to Container Registry
+      run: docker push gcr.io/ardent-medley-426706-t0/yuda-back
 
-    - name: clean ACR repository 
-        # az acr repository delete -n fronttest --repository yudafront --yes
+    - name: Deploy to Cloud Run
       run: |
-        az acr repository delete -n fronttest --repository yudaback --yes
+        gcloud run deploy yuda-back \
+          --image gcr.io/ardent-medley-426706-t0/yuda-back \
+          --region us-west1-b	 \
+          --platform managed \
+          --allow-unauthenticated
 
-    - name: tag ACR name
-        # docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront:${{ github.sha }} 
-      run: | 
-        docker tag yusushin/docker-backend fronttest.azurecr.io/yudaback:${{ github.sha }} 
+# on:
+#   push:
+#     branches: [ "main" ]
 
-    - name: push the dockers to ACR
-        # docker push fronttest.azurecr.io/yudafront:${{ github.sha }}
-      run: | 
-        docker push fronttest.azurecr.io/yudaback:${{ github.sha }}  
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Get Code 
+#       uses: actions/checkout@v3
+
+#     - name: Cache node modules
+#       uses: actions/cache@v2
+#       with:
+#         path: ~/.npm
+#         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#         restore-keys: |
+#           ${{ runner.os }}-node-
+          
+#     - name: Login DockerHub
+#       run: echo "${{secrets.DOCKER_HUB_PASSWORD}}" | docker login -u "${{secrets.DOCKER_HUB_ID}}" --password-stdin 
+    
+#     - name: login azure
+#       run: az login --user "${{secrets.AZURE_LOGIN_ID}}" --password "${{secrets.AZURE_LOGIN_PW}}"
+
+#     # - name: before_install
+#     #   run : docker build -t yusushin/yuda -f ./front/Dockerfile.dev ./front
+
+#     # - name: Docker Test
+#     #   run : docker run -e CI=true yusushin/yuda npm test 
+
+#     - name: build dockers
+#         # docker build --platform=linux/amd64 \
+#         #   --build-arg WDS_SOCKET_HOST="${{ secrets.WDS_SOCKET_HOST }}" \
+#         #   --build-arg WDS_SOCKET_PATH="${{ secrets.WDS_SOCKET_PATH }}" \
+#         #   --build-arg WDS_SOCKET_PORT="${{ secrets.WDS_SOCKET_PORT }}" \
+#         #   --build-arg REACT_APP_SERVER="${{ secrets.REACT_APP_SERVER }}" \
+#         #   --build-arg REACT_APP_DELAY="${{ secrets.REACT_APP_DELAY }}" \
+#         #   -t yusushin/docker-frontend ./front
+#       run: |
+#         docker build --platform=linux/amd64 \
+#           --build-arg POSTGRES_HOSTPORT="${{ secrets.POSTGRES_HOSTPORT }}" \
+#           --build-arg POSTGRES_HOST="${{ secrets.POSTGRES_HOST }}" \
+#           --build-arg POSTGRES_PORT="${{ secrets.POSTGRES_PORT }}" \
+#           --build-arg POSTGRES_USERNAME="${{ secrets.POSTGRES_USERNAME }}" \
+#           --build-arg POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
+#           --build-arg POSTGRES_DATABASE="${{ secrets.POSTGRES_DATABASE }}" \
+#           --build-arg POSTGRES_SYNCHRONIZE="${{ secrets.POSTGRES_SYNCHRONIZE }}" \
+#           --build-arg JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
+#           --build-arg JWT_EXPIRES_ACCESS="${{ secrets.JWT_EXPIRES_ACCESS }}" \
+#           -t yusushin/docker-backend ./back
+
+#     - name: authorizate ACR and login to ACR
+#       run: | 
+#         az acr update -n fronttest --admin-enabled true
+#         az acr login --name fronttest
+
+#     - name: clean ACR repository 
+#         # az acr repository delete -n fronttest --repository yudafront --yes
+#       run: |
+#         az acr repository delete -n fronttest --repository yudaback --yes
+
+#     - name: tag ACR name
+#         # docker tag yusushin/docker-frontend fronttest.azurecr.io/yudafront:${{ github.sha }} 
+#       run: | 
+#         docker tag yusushin/docker-backend fronttest.azurecr.io/yudaback:${{ github.sha }} 
+
+#     - name: push the dockers to ACR
+#         # docker push fronttest.azurecr.io/yudafront:${{ github.sha }}
+#       run: | 
+#         docker push fronttest.azurecr.io/yudaback:${{ github.sha }}  
       
-    # - name: Deploy to Azure front Web App
-    #   id: deploy-front-to-webapp
-    #   uses: azure/webapps-deploy@v2
-    #   with:
-    #     app-name: yudafronttest
-    #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-    #     images: 'fronttest.azurecr.io/yudafront:${{ github.sha }}'
+#     # - name: Deploy to Azure front Web App
+#     #   id: deploy-front-to-webapp
+#     #   uses: azure/webapps-deploy@v2
+#     #   with:
+#     #     app-name: yudafronttest
+#     #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+#     #     images: 'fronttest.azurecr.io/yudafront:${{ github.sha }}'
 
-    - name: Deploy to Azure back Web App
-      id: deploy-back-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: yudabacktest
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACK }}
-        images: 'fronttest.azurecr.io/yudaback:${{ github.sha }}'
+#     - name: Deploy to Azure back Web App
+#       id: deploy-back-to-webapp
+#       uses: azure/webapps-deploy@v2
+#       with:
+#         app-name: yudabacktest
+#         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BACK }}
+#         images: 'fronttest.azurecr.io/yudaback:${{ github.sha }}'
