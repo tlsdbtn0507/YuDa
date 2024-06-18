@@ -33,14 +33,16 @@ jobs:
           --build-arg JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
           --build-arg JWT_EXPIRES_ACCESS="${{ secrets.JWT_EXPIRES_ACCESS }}" \
           -t yusushin/docker-backend ./back
-        docker tag yusushin/docker-backend gcr.io/ardent-medley-426706-t0/yuda-back
 
-    - name: Authenticate Docker to Google Container Registry
-      run: gcloud auth configure-docker
+    - name : tag GCE
+      run: docker tag yusushin/docker-backend gcr.io/ardent-medley-426706-t0/yuda-back:${{ github.sha }} \
+        
 
     - name: Push Docker image to Container Registry
-      run: docker push gcr.io/ardent-medley-426706-t0/yuda-back
-
+      run: docker push gcr.io/ardent-medley-426706-t0/yuda-back:${{ github.sha }} 
+    
+    - name: Install SSH client
+      run: sudo apt-get install -y ssh
     - name: Deploy to Cloud Run
       run: |
         gcloud run deploy yuda-back \
