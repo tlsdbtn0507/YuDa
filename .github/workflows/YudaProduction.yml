@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  GCE_INSTANCE_NAME: instance-20240617-063334
+  GCE_ZONE: us-west1-b
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -18,7 +22,7 @@ jobs:
       with:
         version: 'latest'
         service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-        project_id: ardent-medley-426706-t0
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Build Docker image
       run: |
@@ -37,19 +41,24 @@ jobs:
     - name : tag GCE
       run: docker tag yusushin/docker-backend gcr.io/ardent-medley-426706-t0/yuda-back:${{ github.sha }} \
         
-
     - name: Push Docker image to Container Registry
       run: docker push gcr.io/ardent-medley-426706-t0/yuda-back:${{ github.sha }} 
     
     - name: Install SSH client
       run: sudo apt-get install -y ssh
+
+    - name: Add SSH key
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+        chmod 600 key.pem
+
+      
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy yuda-back \
-          --image gcr.io/ardent-medley-426706-t0/yuda-back \
-          --region us-west1-b	 \
-          --platform managed \
-          --allow-unauthenticated
+        gcloud compute ssh --quiet --zone ${{ env.GCE_ZONE }} ${{ env.GCE_INSTANCE_NAME }} \
+        --command "docker pull gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:${{ github.sha }} \
+        && docker run -d -p 80:80 gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:${{ github.sha }}" \
+        --ssh-key-file=key.pem
 
 # on:
 #   push:
