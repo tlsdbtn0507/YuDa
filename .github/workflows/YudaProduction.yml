@@ -16,6 +16,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    
+    - name: Configure Docker for gcloud
+      run: gcloud auth configure-docker
 
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
