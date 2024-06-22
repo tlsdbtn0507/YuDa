@@ -54,12 +54,14 @@ jobs:
     - name: Install SSH client
       run: sudo apt-get install -y ssh
 
-    - name: Add SSH key
+    - name: Generate SSH key
       run: |
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
-        chmod 600 key.pem
+        ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N ""
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+        chmod 644 ~/.ssh/id_rsa.pub
 
-      
     - name: Deploy to Cloud Run
       run: |
         gcloud compute ssh --quiet --zone ${{ env.GCE_ZONE }} ${{ env.GCE_INSTANCE_NAME }} \
