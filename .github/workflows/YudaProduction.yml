@@ -53,10 +53,10 @@ jobs:
     
     - name: Install SSH client
       run: sudo apt-get install -y ssh
-
+      
     - name: Generate SSH key
       run: |
-        ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N ""
+        mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
