@@ -53,7 +53,7 @@ jobs:
     
     - name: Install SSH client
       run: sudo apt-get install -y ssh
-      
+
     - name: Generate SSH key
       run: |
         mkdir -p ~/.ssh
@@ -65,9 +65,9 @@ jobs:
     - name: Deploy to Cloud Run
       run: |
         gcloud compute ssh --quiet --zone ${{ env.GCE_ZONE }} ${{ env.GCE_INSTANCE_NAME }} \
-        --command "docker pull gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:${{ github.sha }} \
-        && docker run -d -p 80:80 gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:${{ github.sha }}" \
-        --ssh-key-file=key.pem
+         --command "docker pull gcr.io/${{ secrets.GCP_PROJECT_ID }}/yuda-back:${{ github.sha }} && \
+         docker run -d -p 80:80 gcr.io/${{ secrets.GCP_PROJECT_ID }}/yuda-back:${{ github.sha }}" \
+         --ssh-key-file ~/.ssh/id_rsa
 
 # on:
 #   push:
