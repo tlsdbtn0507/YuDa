@@ -62,6 +62,14 @@ jobs:
         echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
         chmod 644 ~/.ssh/id_rsa.pub
 
+    - name: Set up SSH keys for Google Compute Engine
+      uses: google-github-actions/ssh-auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        zone: ${{ env.GCE_ZONE }}
+        instance: ${{ env.GCE_INSTANCE_NAME }}
+        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
 
     - name: Deploy to Cloud Run
       run: |
