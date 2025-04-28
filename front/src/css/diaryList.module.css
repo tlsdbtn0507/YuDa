@@ -1,0 +1,38 @@
+/* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+.wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.wrapper {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+
+.wrapper {
+  overflow-y: scroll;
+  height: 36vh;
+}
+
+/* 화면 높이가 650px 이하일 때 숨김 */
+@media (max-height: 690px) {
+  .wrapper {
+    height: 25vh;
+  }
+}
+
+.h5 {
+  margin: 0;
+}
+
+.list {
+  height: 100%;
+  padding-bottom: 3rem;
+}
+
+.more {
+  justify-items: center;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  height: 2rem;
+}

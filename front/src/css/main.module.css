@@ -1,0 +1,35 @@
+.total {
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial;
+  transition: all 0.8s ease;
+}
+
+.home {
+  width:  19rem;
+  height: 68vh;
+}
+
+.expand {
+  width: 21rem;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.wrapper {
+  color: #4c4c4c;
+  margin: 0 2.5rem;
+}
+
+.today {
+  text-align: center;
+  color: #4c4c4c;
+  font-family: Arial;
+  font-size: 1.1875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
